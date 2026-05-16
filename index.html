@@ -3,403 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="RangoTech — small, thoughtfully made apps for everyday life. Maker of LittleLog: Baby Tracker." />
   <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="RangoTech" />
-  <meta property="og:description" content="Small, thoughtfully made apps for everyday life." />
-  <meta property="og:type" content="website" />
-  <title>RangoTech — Small, thoughtfully made apps</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+  <title>LittleLog — Baby Tracker</title>
+  <meta name="description" content="LittleLog is a private, local-first baby tracker for diapers, feeds, sleep, medications, and milestones, with optional encrypted-by-Google backup to your own Google Drive." />
   <style>
     :root {
-      --bg: #fafaf7;
-      --bg-soft: #f3f0ea;
+      --bg: #fdf8f3;
+      --bg-soft: #f6e7d6;
       --card: #ffffff;
-      --border: #e8e2d6;
-      --fg: #1a1715;
-      --fg-soft: #46403b;
-      --muted: #807868;
+      --border: #ebd9c5;
+      --fg: #2b1d17;
+      --muted: #8a6b5c;
       --accent: #e08b6b;
       --accent-deep: #c76a4d;
-      --accent-soft: #fdd2b4;
-      --radius: 16px;
-      --radius-sm: 10px;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #14110f;
-        --bg-soft: #1d1815;
-        --card: #221c18;
-        --border: #2f2823;
-        --fg: #f7f1ea;
-        --fg-soft: #c9c0b5;
-        --muted: #8a8175;
-        --accent: #f0a684;
-        --accent-deep: #e08b6b;
-        --accent-soft: #3a2519;
+        --bg: #1c1310; --bg-soft: #261912; --card: #2b1d17;
+        --border: #3a2a22; --fg: #f5ece4; --muted: #c7a89a;
+        --accent: #f0a684; --accent-deep: #e08b6b;
       }
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--fg);
+      margin: 0; background: var(--bg); color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
     }
-    a {
-      color: inherit;
-      text-decoration: none;
+    .wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+    header {
+      background: linear-gradient(180deg, #fdd2b4 0%, var(--bg) 100%);
+      padding: 48px 20px 36px; text-align: center;
     }
-
-    /* Top bar */
-    .topbar {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .brand { font-size: 34px; font-weight: 800; letter-spacing: -0.5px;
+      color: var(--fg); margin: 0; }
+    .tagline { color: var(--muted); margin: 8px 0 0; font-size: 17px; }
+    h2 { font-size: 22px; margin: 40px 0 10px; }
+    h3 { font-size: 17px; margin: 22px 0 6px; }
+    p, li { font-size: 16px; }
+    ul { padding-left: 22px; }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 18px 20px; margin: 16px 0;
     }
-    .logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 18px;
-      letter-spacing: -0.4px;
-    }
-    .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #2b1d17 0%, #46403b 100%);
-      color: #fdd2b4;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: -0.5px;
-    }
-    .topbar nav {
-      display: flex;
-      gap: 28px;
-      font-size: 14.5px;
-      color: var(--fg-soft);
-      font-weight: 500;
-    }
-    .topbar nav a {
-      transition: color 0.15s ease;
-    }
-    .topbar nav a:hover {
-      color: var(--accent-deep);
-    }
-    @media (max-width: 540px) {
-      .topbar nav { gap: 18px; font-size: 13.5px; }
-    }
-
-    /* Hero */
-    .hero {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 60px 24px 40px;
-      text-align: center;
-    }
-    .eyebrow {
-      display: inline-block;
-      font-size: 12.5px;
-      font-weight: 600;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      color: var(--accent-deep);
-      background: var(--accent-soft);
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 24px;
-    }
-    .hero h1 {
-      font-size: 52px;
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      line-height: 1.1;
-      margin: 0 0 18px;
-      max-width: 760px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .hero h1 .accent {
-      color: var(--accent-deep);
-    }
-    .hero p {
-      font-size: 18.5px;
-      color: var(--muted);
-      max-width: 580px;
-      margin: 0 auto;
-    }
-    @media (max-width: 640px) {
-      .hero { padding: 40px 20px 28px; }
-      .hero h1 { font-size: 36px; letter-spacing: -0.8px; }
-      .hero p { font-size: 16px; }
-    }
-
-    /* Apps section */
-    .apps {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 40px 24px 80px;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 32px;
-    }
-    .app-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    .app-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 32px;
-      align-items: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .app-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(224, 139, 107, 0.08);
-    }
-    .app-icon-img {
-      width: 96px;
-      height: 96px;
-      border-radius: 22px;
-      display: block;
-      box-shadow: 0 4px 16px rgba(224, 139, 107, 0.25);
-      object-fit: cover;
-    }
-    .app-meta { min-width: 0; }
-    .app-name {
-      font-family: "Nunito", "Inter", sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -0.4px;
-      margin: 0 0 4px;
-    }
-    .app-tag {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--accent-deep);
-      margin: 0 0 14px;
-    }
-    .app-desc {
-      font-size: 15.5px;
-      color: var(--fg-soft);
-      margin: 0 0 16px;
-    }
-    .app-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .pill {
-      font-size: 12.5px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: var(--bg-soft);
-      color: var(--fg-soft);
-      border: 1px solid var(--border);
-    }
-    .app-cta {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: flex-end;
-    }
-    .play-badge {
-      display: inline-block;
-      transition: opacity 0.15s ease;
-    }
-    .play-badge:hover { opacity: 0.85; }
-    .play-badge img {
-      height: 56px;
-      display: block;
-    }
-    .app-link {
-      font-size: 13px;
-      color: var(--muted);
-      transition: color 0.15s ease;
-    }
-    .app-link:hover { color: var(--accent-deep); }
-    @media (max-width: 820px) {
-      .app-card {
-        grid-template-columns: auto 1fr;
-        padding: 28px;
-        gap: 20px;
-      }
-      .app-cta {
-        grid-column: 1 / -1;
-        align-items: flex-start;
-        flex-direction: row;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-    }
-    @media (max-width: 480px) {
-      .app-card { grid-template-columns: 1fr; text-align: left; }
-      .app-icon-img { width: 72px; height: 72px; border-radius: 16px; }
-      .app-name { font-size: 22px; }
-      .play-badge img { height: 48px; }
-    }
-
-    /* About / values strip */
-    .values {
-      background: var(--bg-soft);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 60px 24px;
-    }
-    .values-inner {
-      max-width: 980px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-    }
-    .value h3 {
-      font-size: 16.5px;
-      font-weight: 700;
-      margin: 0 0 8px;
-      letter-spacing: -0.2px;
-    }
-    .value p {
-      font-size: 14.5px;
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.55;
-    }
-    @media (max-width: 720px) {
-      .values-inner { grid-template-columns: 1fr; gap: 24px; }
-      .values { padding: 40px 24px; }
-    }
-
-    /* Footer */
-    footer {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 40px 24px 48px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13.5px;
-      color: var(--muted);
-    }
-    footer .links {
-      display: flex;
-      gap: 22px;
-    }
-    footer a:hover { color: var(--accent-deep); }
-
-    /* Focus visibility for keyboard users */
-    a:focus-visible {
-      outline: 2px solid var(--accent-deep);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
+    a { color: var(--accent-deep); }
+    .muted { color: var(--muted); font-size: 14px; }
+    footer { border-top: 1px solid var(--border); margin-top: 48px;
+      padding-top: 20px; color: var(--muted); font-size: 14px; }
+    .pill { display:inline-block; background: var(--bg-soft);
+      border:1px solid var(--border); border-radius:999px;
+      padding:4px 12px; font-size:13px; color:var(--muted); margin:4px 4px 0 0;}
   </style>
 </head>
 <body>
-
-  <header class="topbar">
-    <a href="/" class="logo">
-      <span class="logo-mark">R</span>
-      <span>RangoTech</span>
-    </a>
-    <nav>
-      <a href="#apps">Apps</a>
-      <a href="#about">About</a>
-      <a href="mailto:allen07edwarddev@gmail.com">Contact</a>
-    </nav>
+  <header>
+    <h1 class="brand">LittleLog</h1>
+    <p class="tagline">A private baby tracker — diapers, feeds, sleep,
+      medications &amp; milestones.</p>
   </header>
 
-  <section class="hero">
-    <span class="eyebrow">Independent studio</span>
-    <h1>Small, thoughtful apps for <span class="accent">everyday life.</span></h1>
-    <p>RangoTech is a one-person studio building privacy-first mobile apps. Local-first by default. No accounts. No tracking SDKs. Just useful tools that respect your time and your data.</p>
-  </section>
+  <main class="wrap">
+    <section>
+      <h2>What LittleLog is</h2>
+      <p>LittleLog is a mobile app (Android package
+        <code>com.rango.baby_tracker</code>) that helps parents and
+        caregivers track a baby's daily life. It is <strong>local-first</strong>:
+        everything you log is stored on your own device. There is no account
+        and no LittleLog server.</p>
+    </section>
 
-  <section id="apps" class="apps">
-    <h2 class="section-title">Our Apps</h2>
-    <div class="app-grid">
-
-      <!-- LittleLog -->
-      <article class="app-card">
-        <img class="app-icon-img" src="./icon.png" alt="LittleLog app icon" width="96" height="96" />
-        <div class="app-meta">
-          <h3 class="app-name">LittleLog</h3>
-          <p class="app-tag">Baby Tracker &amp; Meds</p>
-          <p class="app-desc">Track your baby's day in one tap — diapers, feeds, sleep, meds, and milestones. Reliable medication alarms that keep ringing until you stop them. Your data stays on your device.</p>
-          <div class="app-pills">
-            <span class="pill">Local-first</span>
-            <span class="pill">Medication alarms</span>
-            <span class="pill">Multi-baby</span>
-            <span class="pill">Free</span>
-          </div>
-        </div>
-        <div class="app-cta">
-          <a class="play-badge" href="https://play.google.com/store/apps/details?id=com.rango.baby_tracker" target="_blank" rel="noopener" aria-label="Get LittleLog on Google Play">
-            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" />
-          </a>
-          <a class="app-link" href="./little-log/privacy-policy.html">Privacy policy &rarr;</a>
-        </div>
-      </article>
-
-      <!-- More apps coming soon placeholder — remove or duplicate the .app-card block above when you ship a new app -->
-
-    </div>
-  </section>
-
-  <section id="about" class="values">
-    <div class="values-inner">
-      <div class="value">
-        <h3>Privacy by default</h3>
-        <p>Your data lives on your device unless you choose to share it. No accounts, no cloud sync, no tracking SDKs.</p>
+    <section>
+      <h2>What you can do</h2>
+      <div class="card">
+        <ul>
+          <li><strong>Daily logs</strong> — diapers, bottle &amp; breast
+            feeds, sleep, solids, temperature, and your own custom
+            categories, with optional notes and photos.</li>
+          <li><strong>Medications</strong> — schedule doses and get reliable
+            on-time alarms; track given/missed/skipped doses.</li>
+          <li><strong>Milestones</strong> — a month-by-month photo grid for
+            baby's first year.</li>
+          <li><strong>Insights</strong> — daily summaries and trend charts.</li>
+          <li><strong>Multiple babies</strong> — switch between profiles.</li>
+        </ul>
       </div>
-      <div class="value">
-        <h3>Built by a parent</h3>
-        <p>Every app is something we ship because we needed it ourselves. We use what we make, every day.</p>
-      </div>
-      <div class="value">
-        <h3>Small &amp; sustainable</h3>
-        <p>One developer, free forever, supported by a single small banner ad. No subscriptions, no upsells, no dark patterns.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div>&copy; 2026 RangoTech</div>
-    <div class="links">
-      <a href="#apps">Apps</a>
-      <a href="./littlelog/privacy.html">Privacy</a>
-      <a href="mailto:edward@listify.ai">Contact</a>
-    </div>
-  </footer>
+    <section>
+      <h2>Why LittleLog requests Google account access</h2>
+      <div class="card">
+        <p>Cloud backup is <strong>optional</strong>. If you choose to enable
+          it, LittleLog asks you to sign in with Google and requests a single,
+          narrow permission:</p>
+        <p><span class="pill">Google Drive — app data
+          (<code>drive.appdata</code>) scope</span></p>
+        <p>This scope grants access <strong>only</strong> to a hidden,
+          app-private folder in <em>your own</em> Google Drive
+          ("Application Data folder"). LittleLog uses it solely to store a
+          backup snapshot of your LittleLog data (babies, logs, medications,
+          milestones, photos) so you can recover it after reinstalling the app
+          or moving to a new phone.</p>
+        <h3>What we explicitly do <u>not</u> do</h3>
+        <ul>
+          <li>We do <strong>not</strong> read, list, modify, or delete any of
+            your other Google Drive files — the
+            <code>drive.appdata</code> scope cannot see them.</li>
+          <li>We do <strong>not</strong> send your data to any LittleLog or
+            third-party server. The backup goes directly from your device to
+            your own Google Drive.</li>
+          <li>We do <strong>not</strong> use your Google profile, contacts, or
+            email for advertising or profiling.</li>
+        </ul>
+        <p>You can turn automatic backup off, delete all backups from within
+          the app, or revoke access at any time at
+          <a href="https://myaccount.google.com/permissions">your Google
+          Account permissions</a>.</p>
+      </div>
+    </section>
 
+    <section>
+      <h2>Privacy</h2>
+      <p>Full details of what data the app handles, where it lives, and the
+        device permissions it uses are in our privacy policy:</p>
+      <p><a href="privacy.html"><strong>LittleLog Privacy
+        Policy</strong></a></p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>Questions about LittleLog or this site?
+        Email <a href="mailto:edward@listify.ai">edward@listify.ai</a>.</p>
+    </section>
+
+    <footer>
+      <p>LittleLog — developed by Edward.
+        This page is the official homepage for the LittleLog app and is
+        provided for app and OAuth verification purposes.</p>
+      <p class="muted">© 2026 LittleLog. All rights reserved.</p>
+    </footer>
+  </main>
 </body>
 </html>
