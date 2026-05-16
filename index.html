@@ -9,6 +9,8 @@
   <meta property="og:title" content="LittleLog — Baby Tracker" />
   <meta property="og:description" content="A calm, private baby tracker. Local-first, no account required, optional Google Drive backup." />
   <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="apple-touch-icon" href="icon.png" />
   <style>
     :root{
       --bg:#fdf8f3; --bg2:#fcebdd; --card:#ffffff; --border:#efe0d0;
@@ -37,7 +39,7 @@
 
     /* Hero */
     .hero{
-      position:relative;text-align:center;padding:76px 22px 64px;
+      position:relative;text-align:center;padding:72px 22px 52px;
       background:
         radial-gradient(900px 320px at 50% -40px,
           var(--peach-top), transparent 70%),
@@ -45,30 +47,28 @@
       overflow:hidden;
     }
     .logo{
-      width:88px;height:88px;border-radius:26px;margin:0 auto 22px;
-      display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(160deg,var(--peach-top),var(--accent));
-      box-shadow:var(--shadow);font-size:46px;line-height:1;
+      width:96px;height:96px;border-radius:24px;margin:0 auto 24px;
+      display:block;object-fit:cover;box-shadow:var(--shadow);
     }
     .hero h1{font-size:42px;font-weight:800;letter-spacing:-1px}
-    .hero p{color:var(--muted);font-size:19px;margin-top:12px;
+    .hero p{color:var(--muted);font-size:19px;margin-top:14px;
       max-width:560px;margin-left:auto;margin-right:auto}
     .badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
-      margin-top:24px}
+      margin-top:28px}
     .badge{
       background:var(--card);border:1px solid var(--border);
       border-radius:999px;padding:7px 15px;font-size:13px;
       color:var(--muted);box-shadow:var(--shadow)}
     .badge b{color:var(--fg)}
 
-    section{padding:46px 0}
+    section{padding:40px 0}
     .eyebrow{color:var(--accent-deep);font-weight:700;font-size:13px;
       letter-spacing:1.5px;text-transform:uppercase}
-    h2{font-size:27px;font-weight:800;letter-spacing:-.4px;margin:6px 0 6px}
+    h2{font-size:27px;font-weight:800;letter-spacing:-.4px;margin:8px 0 10px}
     .lead{color:var(--muted);font-size:16px;max-width:620px}
 
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
-      margin-top:26px}
+      margin-top:28px}
     @media (max-width:640px){.grid{grid-template-columns:1fr}}
     .feature{
       background:var(--card);border:1px solid var(--border);
@@ -85,7 +85,7 @@
 
     .privacy-card{
       background:var(--card);border:1px solid var(--border);
-      border-radius:24px;padding:30px;box-shadow:var(--shadow);margin-top:26px}
+      border-radius:24px;padding:30px;box-shadow:var(--shadow);margin-top:28px}
     .privacy-card h3{font-size:18px;margin:18px 0 8px}
     .privacy-card ul{list-style:none;margin-top:10px}
     .privacy-card li{position:relative;padding-left:30px;margin:10px 0;
@@ -125,7 +125,8 @@
 <body>
 
   <header class="hero">
-    <div class="logo" aria-hidden="true">🧸</div>
+    <img class="logo" src="icon.png" width="96" height="96"
+      alt="LittleLog app icon" />
     <h1>LittleLog</h1>
     <p>A calm, private baby tracker — diapers, feeds, sleep,
       medications &amp; milestones. Everything stays on your device.</p>
