@@ -5,143 +5,237 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow" />
   <title>LittleLog — Baby Tracker</title>
-  <meta name="description" content="LittleLog is a private, local-first baby tracker for diapers, feeds, sleep, medications, and milestones, with optional encrypted-by-Google backup to your own Google Drive." />
+  <meta name="description" content="LittleLog is a private, local-first baby tracker for diapers, feeds, sleep, medications and milestones, with optional backup to your own Google Drive." />
+  <meta property="og:title" content="LittleLog — Baby Tracker" />
+  <meta property="og:description" content="A calm, private baby tracker. Local-first, no account required, optional Google Drive backup." />
+  <meta property="og:type" content="website" />
   <style>
-    :root {
-      --bg: #fdf8f3;
-      --bg-soft: #f6e7d6;
-      --card: #ffffff;
-      --border: #ebd9c5;
-      --fg: #2b1d17;
-      --muted: #8a6b5c;
-      --accent: #e08b6b;
-      --accent-deep: #c76a4d;
+    :root{
+      --bg:#fdf8f3; --bg2:#fcebdd; --card:#ffffff; --border:#efe0d0;
+      --fg:#2b1d17; --muted:#8a6b5c; --accent:#e08b6b; --accent-deep:#c76a4d;
+      --peach-top:#fdd2b4; --peach-bot:#e9a987; --good:#6fae7d;
+      --shadow:0 10px 30px rgba(224,139,107,.12);
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1c1310; --bg-soft: #261912; --card: #2b1d17;
-        --border: #3a2a22; --fg: #f5ece4; --muted: #c7a89a;
-        --accent: #f0a684; --accent-deep: #e08b6b;
+    @media (prefers-color-scheme:dark){
+      :root{
+        --bg:#1b120f; --bg2:#241712; --card:#271a15; --border:#3a2a22;
+        --fg:#f5ece4; --muted:#c7a89a; --accent:#f0a684; --accent-deep:#f0a684;
+        --peach-top:#5a3324; --peach-bot:#2c1c15; --shadow:0 10px 30px rgba(0,0,0,.35);
       }
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; background: var(--bg); color: var(--fg);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
-      line-height: 1.6;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);color:var(--fg);line-height:1.65;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+        "Helvetica Neue",Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
     }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
-    header {
-      background: linear-gradient(180deg, #fdd2b4 0%, var(--bg) 100%);
-      padding: 48px 20px 36px; text-align: center;
+    a{color:var(--accent-deep);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:880px;margin:0 auto;padding:0 22px}
+
+    /* Hero */
+    .hero{
+      position:relative;text-align:center;padding:76px 22px 64px;
+      background:
+        radial-gradient(900px 320px at 50% -40px,
+          var(--peach-top), transparent 70%),
+        linear-gradient(180deg,var(--bg2) 0%,var(--bg) 60%);
+      overflow:hidden;
     }
-    .brand { font-size: 34px; font-weight: 800; letter-spacing: -0.5px;
-      color: var(--fg); margin: 0; }
-    .tagline { color: var(--muted); margin: 8px 0 0; font-size: 17px; }
-    h2 { font-size: 22px; margin: 40px 0 10px; }
-    h3 { font-size: 17px; margin: 22px 0 6px; }
-    p, li { font-size: 16px; }
-    ul { padding-left: 22px; }
-    .card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 18px 20px; margin: 16px 0;
+    .logo{
+      width:88px;height:88px;border-radius:26px;margin:0 auto 22px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(160deg,var(--peach-top),var(--accent));
+      box-shadow:var(--shadow);font-size:46px;line-height:1;
     }
-    a { color: var(--accent-deep); }
-    .muted { color: var(--muted); font-size: 14px; }
-    footer { border-top: 1px solid var(--border); margin-top: 48px;
-      padding-top: 20px; color: var(--muted); font-size: 14px; }
-    .pill { display:inline-block; background: var(--bg-soft);
-      border:1px solid var(--border); border-radius:999px;
-      padding:4px 12px; font-size:13px; color:var(--muted); margin:4px 4px 0 0;}
+    .hero h1{font-size:42px;font-weight:800;letter-spacing:-1px}
+    .hero p{color:var(--muted);font-size:19px;margin-top:12px;
+      max-width:560px;margin-left:auto;margin-right:auto}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+      margin-top:24px}
+    .badge{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:999px;padding:7px 15px;font-size:13px;
+      color:var(--muted);box-shadow:var(--shadow)}
+    .badge b{color:var(--fg)}
+
+    section{padding:46px 0}
+    .eyebrow{color:var(--accent-deep);font-weight:700;font-size:13px;
+      letter-spacing:1.5px;text-transform:uppercase}
+    h2{font-size:27px;font-weight:800;letter-spacing:-.4px;margin:6px 0 6px}
+    .lead{color:var(--muted);font-size:16px;max-width:620px}
+
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+      margin-top:26px}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+    .feature{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+    .ficon{
+      width:46px;height:46px;border-radius:14px;display:flex;
+      align-items:center;justify-content:center;margin-bottom:14px;
+      background:linear-gradient(160deg,var(--peach-top),var(--accent));
+      color:#fff}
+    .ficon svg{width:24px;height:24px;stroke:#fff;fill:none;
+      stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .feature h3{font-size:17px;margin-bottom:6px}
+    .feature p{color:var(--muted);font-size:15px}
+
+    .privacy-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:24px;padding:30px;box-shadow:var(--shadow);margin-top:26px}
+    .privacy-card h3{font-size:18px;margin:18px 0 8px}
+    .privacy-card ul{list-style:none;margin-top:10px}
+    .privacy-card li{position:relative;padding-left:30px;margin:10px 0;
+      color:var(--fg);font-size:15.5px}
+    .privacy-card li::before{
+      content:"";position:absolute;left:0;top:3px;width:18px;height:18px;
+      border-radius:50%;background:rgba(111,174,125,.16);
+      box-shadow:inset 0 0 0 2px var(--good)}
+    .privacy-card li.no::before{
+      background:rgba(199,106,77,.14);box-shadow:inset 0 0 0 2px var(--accent-deep)}
+    .scope{
+      display:inline-block;margin:14px 0 4px;padding:8px 14px;
+      border-radius:12px;background:var(--bg2);border:1px solid var(--border);
+      font-size:14px;color:var(--fg);font-family:ui-monospace,SFMono-Regular,
+      Menlo,Consolas,monospace}
+
+    .cta{
+      display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+      justify-content:space-between;background:
+      linear-gradient(160deg,var(--peach-top),var(--accent));
+      border-radius:24px;padding:26px 28px;color:#3a241a;
+      box-shadow:var(--shadow);margin-top:8px}
+    .cta h2{color:#3a241a;margin:0}
+    .cta p{color:#5a3a2c;margin-top:4px;font-size:15px}
+    .btn{
+      background:#fff;color:var(--accent-deep);font-weight:700;
+      padding:13px 22px;border-radius:14px;white-space:nowrap;
+      box-shadow:0 6px 16px rgba(0,0,0,.12)}
+    .btn:hover{text-decoration:none;opacity:.92}
+
+    footer{border-top:1px solid var(--border);padding:30px 0 56px;
+      color:var(--muted);font-size:14px}
+    footer a{color:var(--muted)}
+    .sep{height:1px;background:var(--border);margin:8px 0 0}
   </style>
 </head>
 <body>
-  <header>
-    <h1 class="brand">LittleLog</h1>
-    <p class="tagline">A private baby tracker — diapers, feeds, sleep,
-      medications &amp; milestones.</p>
+
+  <header class="hero">
+    <div class="logo" aria-hidden="true">🧸</div>
+    <h1>LittleLog</h1>
+    <p>A calm, private baby tracker — diapers, feeds, sleep,
+      medications &amp; milestones. Everything stays on your device.</p>
+    <div class="badges">
+      <span class="badge"><b>Local-first</b> · no account needed</span>
+      <span class="badge"><b>No ads tracking</b> your baby's data</span>
+      <span class="badge"><b>Optional</b> Google Drive backup</span>
+    </div>
   </header>
 
-  <main class="wrap">
-    <section>
-      <h2>What LittleLog is</h2>
-      <p>LittleLog is a mobile app (Android package
-        <code>com.rango.baby_tracker</code>) that helps parents and
-        caregivers track a baby's daily life. It is <strong>local-first</strong>:
-        everything you log is stored on your own device. There is no account
-        and no LittleLog server.</p>
-    </section>
+  <main>
+    <section class="wrap">
+      <div class="eyebrow">What it does</div>
+      <h2>Everything in one gentle place</h2>
+      <p class="lead">LittleLog (Android package
+        <code>com.rango.baby_tracker</code>) helps parents and caregivers
+        track a baby's day without the noise. There is no LittleLog account
+        and no LittleLog server — your data lives on your phone.</p>
 
-    <section>
-      <h2>What you can do</h2>
-      <div class="card">
-        <ul>
-          <li><strong>Daily logs</strong> — diapers, bottle &amp; breast
-            feeds, sleep, solids, temperature, and your own custom
-            categories, with optional notes and photos.</li>
-          <li><strong>Medications</strong> — schedule doses and get reliable
-            on-time alarms; track given/missed/skipped doses.</li>
-          <li><strong>Milestones</strong> — a month-by-month photo grid for
-            baby's first year.</li>
-          <li><strong>Insights</strong> — daily summaries and trend charts.</li>
-          <li><strong>Multiple babies</strong> — switch between profiles.</li>
-        </ul>
+      <div class="grid">
+        <div class="feature">
+          <div class="ficon"><svg viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"/></svg></div>
+          <h3>Daily logs</h3>
+          <p>Diapers, bottle &amp; breast feeds, sleep, solids, temperature,
+            and your own custom categories — with notes and photos.</p>
+        </div>
+        <div class="feature">
+          <div class="ficon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3>Medication alarms</h3>
+          <p>Schedule doses and get reliable on-time alarms. Track given,
+            missed and skipped doses at a glance.</p>
+        </div>
+        <div class="feature">
+          <div class="ficon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M8 4v5"/></svg></div>
+          <h3>Milestones</h3>
+          <p>A month-by-month photo grid for baby's first year, ready to
+            look back on and share.</p>
+        </div>
+        <div class="feature">
+          <div class="ficon"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-4M13 16V8M18 16v-7"/></svg></div>
+          <h3>Insights</h3>
+          <p>Daily summaries and trend charts so patterns in feeding and
+            sleep are easy to see. Switch between multiple babies.</p>
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2>Why LittleLog requests Google account access</h2>
-      <div class="card">
-        <p>Cloud backup is <strong>optional</strong>. If you choose to enable
-          it, LittleLog asks you to sign in with Google and requests a single,
-          narrow permission:</p>
-        <p><span class="pill">Google Drive — app data
-          (<code>drive.appdata</code>) scope</span></p>
-        <p>This scope grants access <strong>only</strong> to a hidden,
-          app-private folder in <em>your own</em> Google Drive
-          ("Application Data folder"). LittleLog uses it solely to store a
-          backup snapshot of your LittleLog data (babies, logs, medications,
-          milestones, photos) so you can recover it after reinstalling the app
-          or moving to a new phone.</p>
-        <h3>What we explicitly do <u>not</u> do</h3>
+    <section class="wrap">
+      <div class="eyebrow">Your data &amp; Google access</div>
+      <h2>Transparent by design</h2>
+      <p class="lead">Cloud backup is optional. If you turn it on, LittleLog
+        asks to sign in with Google and requests one narrow permission —
+        nothing more.</p>
+
+      <div class="privacy-card">
+        <span class="scope">Google Drive · app-data scope
+          (drive.appdata)</span>
+        <p style="color:var(--muted);margin-top:10px">This grants access
+          <b>only</b> to a hidden, app-private folder in <i>your own</i>
+          Google Drive. LittleLog uses it solely to store a backup snapshot
+          of your data so you can recover it after reinstalling or moving
+          phones.</p>
+
+        <h3>What LittleLog does</h3>
         <ul>
-          <li>We do <strong>not</strong> read, list, modify, or delete any of
-            your other Google Drive files — the
-            <code>drive.appdata</code> scope cannot see them.</li>
-          <li>We do <strong>not</strong> send your data to any LittleLog or
-            third-party server. The backup goes directly from your device to
-            your own Google Drive.</li>
-          <li>We do <strong>not</strong> use your Google profile, contacts, or
-            email for advertising or profiling.</li>
+          <li>Stores your backup directly in <b>your</b> Google Drive's
+            hidden app folder — over an encrypted connection.</li>
+          <li>Keeps only the 5 most recent snapshots; older ones are
+            removed automatically.</li>
+          <li>Lets you turn backup off, clear all backups in-app, or revoke
+            access anytime from your Google Account.</li>
         </ul>
-        <p>You can turn automatic backup off, delete all backups from within
-          the app, or revoke access at any time at
-          <a href="https://myaccount.google.com/permissions">your Google
-          Account permissions</a>.</p>
+
+        <h3>What LittleLog never does</h3>
+        <ul>
+          <li class="no">Read, list, or modify any of your other Google
+            Drive files — the scope can't even see them.</li>
+          <li class="no">Send your data to a LittleLog or third-party
+            server. We have no server and never receive a copy.</li>
+          <li class="no">Use your Google profile, contacts or email for
+            advertising or profiling.</li>
+        </ul>
+        <p style="color:var(--muted);margin-top:16px;font-size:14px">
+          LittleLog's use of information received from Google APIs adheres
+          to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>,
+          including the Limited Use requirements.</p>
       </div>
     </section>
 
-    <section>
-      <h2>Privacy</h2>
-      <p>Full details of what data the app handles, where it lives, and the
-        device permissions it uses are in our privacy policy:</p>
-      <p><a href="privacy.html"><strong>LittleLog Privacy
-        Policy</strong></a></p>
+    <section class="wrap">
+      <div class="cta">
+        <div>
+          <h2>Read the full privacy policy</h2>
+          <p>Exactly what data is handled, where it lives, and every
+            permission — in plain language.</p>
+        </div>
+        <a class="btn" href="privacy.html">Privacy Policy →</a>
+      </div>
     </section>
 
-    <section>
-      <h2>Contact</h2>
-      <p>Questions about LittleLog or this site?
-        Email <a href="mailto:edward@listify.ai">edward@listify.ai</a>.</p>
-    </section>
-
-    <footer>
-      <p>LittleLog — developed by Edward.
-        This page is the official homepage for the LittleLog app and is
-        provided for app and OAuth verification purposes.</p>
-      <p class="muted">© 2026 LittleLog. All rights reserved.</p>
+    <footer class="wrap">
+      <p><b>Contact:</b> questions about LittleLog, your data, or a deletion
+        request — email
+        <a href="mailto:allen07edwarddev@gmail.com">allen07edwarddev@gmail.com</a>.</p>
+      <div class="sep"></div>
+      <p style="margin-top:16px">LittleLog — developed by Edward. This is the
+        official homepage for the LittleLog app, provided for app and OAuth
+        verification. © 2026 LittleLog. All rights reserved.</p>
     </footer>
   </main>
+
 </body>
 </html>
