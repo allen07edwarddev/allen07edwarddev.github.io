@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>LittleLog — Privacy Policy</title>
+  <style>
+    :root {
+      --bg: #fdf8f3;
+      --bg-soft: #f6e7d6;
+      --card: #ffffff;
+      --border: #ebd9c5;
+      --fg: #2b1d17;
+      --muted: #8a6b5c;
+      --accent: #e08b6b;
+      --accent-deep: #c76a4d;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1310;
+        --bg-soft: #261912;
+        --card: #2b1d17;
+        --border: #3a2a22;
+        --fg: #f5ece4;
+        --muted: #c7a89a;
+        --accent: #f0a684;
+        --accent-deep: #e08b6b;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Avenir, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+    }
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.4px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin: 8px 0 4px;
+      letter-spacing: -0.6px;
+    }
+    .updated {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 36px;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    h2 + p, h2 + ul, h2 + .tldr, h2 + table {
+      margin-top: 6px;
+    }
+    p, li {
+      font-size: 15.5px;
+      color: var(--fg);
+    }
+    a {
+      color: var(--accent-deep);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease;
+    }
+    a:hover { border-bottom-color: var(--accent-deep); }
+    .tldr {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 16px 0;
+    }
+    .tldr ul { margin: 6px 0 0; padding-left: 20px; }
+    .tldr li { margin-bottom: 6px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13.5px;
+      background: var(--bg-soft);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: 14.5px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 14px;
+      vertical-align: top;
+    }
+    th {
+      background: var(--bg-soft);
+      font-weight: 700;
+      color: var(--fg);
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    tr + tr td { border-top: 1px solid var(--border); }
+    td:first-child { white-space: nowrap; font-weight: 600; }
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 540px) {
+      .wrap { padding: 24px 16px 60px; }
+      h1 { font-size: 26px; }
+      table { font-size: 13.5px; }
+      th, td { padding: 8px 10px; }
+      td:first-child { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="brand-mark">&#9829;</span>
+        <span class="brand-name">LittleLog</span>
+      </div>
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: May 16, 2026</p>
+    </header>
+
+    <p>LittleLog (&ldquo;the app&rdquo;) is built to help parents track their baby's daily life. We take your privacy seriously. This policy explains what data the app handles, where it lives, what third-party services are involved, and what permissions it uses.</p>
+
+    <h2>TL;DR</h2>
+    <div class="tldr">
+      <ul>
+        <li><strong>Your baby's data stays on your device by default.</strong> LittleLog has no LittleLog server. Logs, photos, notes, milestones, and medications never leave your phone unless <em>you</em> export a backup or enable the optional Google&nbsp;Drive backup described below.</li>
+        <li><strong>Optional Google Drive backup.</strong> If you choose to sign in with Google and enable backup, LittleLog stores a backup of your data in a hidden, app-private folder in <em>your own</em> Google Drive using only the <code>drive.appdata</code> scope. It is never sent to us, and we cannot see any of your other Drive files.</li>
+        <li><strong>We do show a small banner ad</strong> via Google AdMob. AdMob is operated by Google and may collect device identifiers and your approximate (IP-based) location to serve ads. See the &ldquo;Advertising&rdquo; section below.</li>
+        <li><strong>We collect crash reports</strong> via Firebase Crashlytics so we can fix bugs. Crash reports contain technical info (stack trace, device model, OS version) but never your baby's logs, photos, or names.</li>
+        <li><strong>No usage analytics, no tracking SDKs, no profiling.</strong> We do not run any analytics SDK and we do not sell or share data.</li>
+      </ul>
+    </div>
+
+    <h2>What data we handle on-device</h2>
+    <p>The following is stored locally in the app's private storage and is never transmitted to any server we control:</p>
+    <ul>
+      <li>Baby profile info you enter (name, date of birth, optional sex, optional birth weight/length, optional photo)</li>
+      <li>Daily logs you record (diapers, bottles, breast feeds, sleep, solids, temperature, custom categories, free-text notes)</li>
+      <li>Photos you attach to logs, milestone months, or baby profiles</li>
+      <li>Medication schedules and dose history</li>
+      <li>App preferences (theme, custom categories, alarm sounds, active baby)</li>
+    </ul>
+    <p>All of this lives in a local SQLite database and the app's private files directory. Other apps on your device cannot read it.</p>
+
+    <h2>Advertising (Google AdMob)</h2>
+    <p>LittleLog displays a single banner ad at the bottom of the screen, served by <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google AdMob</a>. To serve and measure ads, AdMob &mdash; not LittleLog &mdash; may collect:</p>
+    <ul>
+      <li>Your Android Advertising ID (a resettable, non-permanent identifier)</li>
+      <li>Approximate (IP-based) location, not GPS</li>
+      <li>Device info (model, OS version, language, screen size)</li>
+      <li>Ad interaction data (impressions, clicks, viewability)</li>
+    </ul>
+    <p>This data is handled by Google under <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>. We never receive personal identifiers from AdMob &mdash; we only see anonymous, aggregated revenue reports.</p>
+    <p>You can reset or opt out of personalised ads at any time:</p>
+    <ul>
+      <li><strong>Android:</strong> Settings &rarr; Google &rarr; Ads &rarr; &ldquo;Delete advertising ID&rdquo; or &ldquo;Opt out of Ads Personalisation&rdquo;.</li>
+      <li><strong>iOS:</strong> Settings &rarr; Privacy &amp; Security &rarr; Apple Advertising &rarr; turn off Personalised Ads. (LittleLog requests App Tracking Transparency permission on iOS; if you deny it, only non-personalised ads are shown.)</li>
+    </ul>
+
+    <h2>Crash reports (Firebase Crashlytics)</h2>
+    <p>LittleLog uses <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Crashlytics</a> to report crashes so we can fix bugs. When the app crashes, the following technical data is sent to Google:</p>
+    <ul>
+      <li>Crash stack trace and last few debug log lines</li>
+      <li>Anonymous Crashlytics Installation UUID (a random identifier, not linked to you)</li>
+      <li>Device model, OS version, app version, build number</li>
+      <li>State of the app at the time of the crash (which screen was open, etc.)</li>
+    </ul>
+    <p>We do <strong>not</strong> include your baby's name, photos, logs, medication info, or any free-text notes in crash reports. Crashlytics data is retained by Google according to <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">their data-retention policy</a> (90 days for crash data).</p>
+
+    <h2>Permissions and why we need them</h2>
+    <table>
+      <thead>
+        <tr><th>Permission</th><th>Why we ask</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Camera<br><code>android.permission.CAMERA</code></td>
+          <td>To let you take photos for events, milestone months, or baby profile pictures. The camera is used only when you tap an &ldquo;Add photo&rdquo; or &ldquo;Camera&rdquo; button.</td>
+        </tr>
+        <tr>
+          <td>Photo picking (gallery)</td>
+          <td>Photo selection uses the system <strong>Android Photo Picker</strong> (Android 13+) or document picker (older). You select each photo manually, and the app receives access only to that file. We do <em>not</em> request <code>READ_MEDIA_IMAGES</code> or storage permissions.</td>
+        </tr>
+        <tr>
+          <td>Advertising ID<br><code>com.google.android.gms.permission.AD_ID</code></td>
+          <td>Required by the Google Mobile Ads SDK on Android 13+ to deliver the banner ad. You can reset or disable this identifier in your device settings (see the Advertising section above).</td>
+        </tr>
+        <tr>
+          <td>Post notifications</td>
+          <td>To show medication-dose reminders and timer notifications.</td>
+        </tr>
+        <tr>
+          <td>Schedule exact alarm / Use exact alarm</td>
+          <td>To fire medication alarms at the exact scheduled time.</td>
+        </tr>
+        <tr>
+          <td>Full-screen intent</td>
+          <td>To show the medication alarm screen on top so you don't miss a dose.</td>
+        </tr>
+        <tr>
+          <td>Foreground service / Foreground service media playback</td>
+          <td>To keep the alarm sound playing reliably when the screen is off.</td>
+        </tr>
+        <tr>
+          <td>Receive boot completed</td>
+          <td>To re-arm scheduled medication alarms after the device restarts.</td>
+        </tr>
+        <tr>
+          <td>Vibrate, Wake lock</td>
+          <td>So the alarm vibrates and wakes the screen when it fires.</td>
+        </tr>
+        <tr>
+          <td>Request ignore battery optimizations</td>
+          <td>Optional &mdash; you may grant this if alarms are being killed by aggressive battery saving.</td>
+        </tr>
+        <tr>
+          <td>Internet</td>
+          <td>Used for fetching banner ads from AdMob, sending crash reports to Firebase Crashlytics, and &mdash; only if you enable it &mdash; uploading your backup to your own Google Drive.</td>
+        </tr>
+        <tr>
+          <td>Google Sign-In + Google Drive (<code>drive.appdata</code>)</td>
+          <td>Optional. Only requested if you turn on Google Drive backup, so the app can store and restore a backup in a hidden, app-private folder in your own Drive. Not requested otherwise. See &ldquo;Backups &amp; Google Drive&rdquo; above.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Backups &amp; Google Drive</h2>
+    <p><strong>Manual file backup.</strong> LittleLog can export your data as a single file (a ZIP that bundles your logs, medications, milestones, and photos, or a legacy per-baby JSON). The export is created locally and only goes somewhere if <strong>you</strong> tap Share and pick a destination. We never receive a copy.</p>
+
+    <p><strong>Automatic Google Drive backup (optional).</strong> You may sign in with your Google account and turn on automatic backup. When enabled, LittleLog uploads a backup snapshot of your LittleLog data directly from your device to a hidden, application-private folder in <em>your own</em> Google Drive (the Drive &ldquo;Application Data folder&rdquo;).</p>
+    <ul>
+      <li><strong>Scope requested:</strong> only <code>https://www.googleapis.com/auth/drive.appdata</code> (Google Drive &mdash; app data). This scope can access <em>only</em> the hidden folder LittleLog itself created. It cannot read, list, modify, or delete any of your other Google Drive files, and it cannot see your Google profile, contacts, or email content.</li>
+      <li><strong>What is stored there:</strong> a snapshot of your babies, daily logs, medications and dose history, milestones, custom categories, and the photos you attached &mdash; the same data the app stores on-device.</li>
+      <li><strong>Where it goes:</strong> directly from your device to your own Google Drive over an encrypted connection. LittleLog has no server and never receives, stores, or processes a copy. We only keep the 5 most recent snapshots in your Drive; older ones are deleted automatically.</li>
+      <li><strong>Your control:</strong> backup is off until you enable it. You can turn it off, delete all backups from inside the app (Backup &amp; restore &rarr; Clear all backups), or revoke LittleLog's Google access entirely at <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account &rarr; Third-party access</a>.</li>
+    </ul>
+    <p>LittleLog's use of information received from Google APIs adheres to the
+      <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements. Google user data obtained via the <code>drive.appdata</code> scope is used <strong>only</strong> to provide the user-facing backup and restore feature, is never transferred to others, is never used for advertising, and is never read by humans.</p>
+    <p>Milestone collages can be shared as PNG images via the share sheet &mdash; same model: we hand the file to your share sheet and step out of the way.</p>
+
+    <h2>Children's privacy</h2>
+    <p>LittleLog is designed for parents and caregivers to track their own child's data. The app is not directed to children under 13, and we do not knowingly collect any data <em>from</em> children. The Google AdMob banner is configured to show non-personalised, family-friendly ads.</p>
+
+    <h2>Data deletion</h2>
+    <p>Because LittleLog has no account or server, deleting your data is immediate and local:</p>
+    <ul>
+      <li>Delete a single baby (and all its events, photos, meds, and milestones) from Profile &rarr; tap the baby &rarr; &ldquo;Delete baby&rdquo;.</li>
+      <li>Uninstall the app to remove everything on-device in one step. Android will purge the app's private storage as part of uninstall.</li>
+      <li>Delete all Google Drive backups from inside the app: Backup &amp; restore &rarr; &ldquo;Clear all backups&rdquo;. You can also revoke LittleLog's Google Drive access at <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account &rarr; Third-party access</a>; uninstalling does <em>not</em> automatically delete data already in your Drive's app folder.</li>
+    </ul>
+    <p>For Crashlytics or AdMob data held by Google, follow Google's deletion process via <a href="https://myaccount.google.com" target="_blank" rel="noopener">Google Account &rarr; Data &amp; privacy</a>.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>If we change this policy we will update the &ldquo;Last updated&rdquo; date at the top. Material changes (e.g., adding a new third-party SDK) will also be announced in the app's release notes.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy or your data? Email <a href="mailto:allen07edwarddev@gmail.com">allen07edwarddev@gmail.com</a>.</p>
+
+    <footer>
+      &copy; 2026 LittleLog
+    </footer>
+  </div>
+</body>
+</html>
