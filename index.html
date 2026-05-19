@@ -11,8 +11,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rango-tech.com/" />
   <meta name="theme-color" content="#1a1a17" />
-  <link rel="icon" type="image/png" href="icon.png" />
-  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f4f1ea'/%3E%3Ctext x='7.5' y='23' font-family='Georgia,serif' font-size='21' font-weight='700' fill='%231a1a17'%3ER%3C/text%3E%3Ccircle cx='23.5' cy='21' r='3' fill='%23dd4f1f'/%3E%3C/svg%3E" />
   <link rel="canonical" href="https://rango-tech.com/" />
   <script type="application/ld+json">
   {
@@ -20,7 +19,7 @@
     "@type": "Organization",
     "name": "Rango Tech",
     "url": "https://rango-tech.com/",
-    "logo": "https://rango-tech.com/icon.png",
+    "logo": "https://rango-tech.com/",
     "description": "Independent software studio building calm, private, local-first apps.",
     "founder": { "@type": "Person", "name": "Edward" },
     "email": "allen07edwarddev@gmail.com"
@@ -77,9 +76,12 @@
       padding:18px 0;font-family:var(--mono);font-size:13px}
     .brand{display:flex;align-items:center;gap:11px;font-weight:700;
       letter-spacing:.5px}
-    .brand img{width:30px;height:30px;border-radius:7px;
-      border:1px solid var(--rule);
-      image-rendering:-webkit-optimize-contrast}
+    .brand .logo{width:30px;height:30px;border-radius:7px;
+      border:1px solid var(--rule);background:var(--paper2);
+      display:block;flex:0 0 auto}
+    .brand .logo .lg-r{font-family:var(--serif);font-size:18px;
+      font-weight:600;fill:var(--ink)}
+    .brand .logo .lg-dot{fill:var(--ember)}
     .brand .x{color:var(--ember)}
     .topnav{display:flex;gap:26px;color:var(--muted)}
     .topnav a{position:relative;padding-bottom:2px;
@@ -239,7 +241,10 @@
   <div class="topbar">
     <div class="wrap row">
       <a class="brand" href="/">
-        <img src="icon.png" alt="" />
+        <svg class="logo" viewBox="0 0 32 32" role="img" aria-label="Rango Tech">
+          <text class="lg-r" x="7.5" y="23">R</text>
+          <circle class="lg-dot" cx="23.5" cy="21" r="2.4"></circle>
+        </svg>
         <span>RANGO<span class="x">.</span>TECH</span>
       </a>
       <div class="topnav">
