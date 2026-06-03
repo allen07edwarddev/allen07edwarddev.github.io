@@ -1,180 +1,475 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Grozi</title>
-  <meta name="description"
-        content="Grozi keeps your family's grocery runs tidy. Shared lists, smart AI suggestions, gentle reminders — all wrapped in a friendly green app." />
-  <link rel="icon" type="image/png" href="./assets/logo.png" />
-  <link rel="stylesheet" href="./styles.css" />
-  <meta name="application-name" content="Grozi" />
-  <meta property="og:site_name" content="Grozi" />
-  <meta property="og:title" content="Grozi — the friendliest shared grocery list" />
-  <meta property="og:description"
-        content="Plan, share, and shop together. Built for households who don't want to think about who's getting the milk." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>Rango Tech — independent software studio</title>
+  <meta name="description" content="Rango Tech is an independent software studio building calm, private, local-first apps. Your data stays on your device." />
+  <meta property="og:title" content="Rango Tech" />
+  <meta property="og:description" content="Independent software studio. Calm, private, local-first apps." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="./assets/mascot_hero.png" />
+  <meta property="og:url" content="https://rango-tech.com/" />
+  <meta name="theme-color" content="#1a1a17" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f4f1ea'/%3E%3Ctext x='7.5' y='23' font-family='Georgia,serif' font-size='21' font-weight='700' fill='%231a1a17'%3ER%3C/text%3E%3Ccircle cx='23.5' cy='21' r='3' fill='%23dd4f1f'/%3E%3C/svg%3E" />
+  <link rel="canonical" href="https://rango-tech.com/" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Grozi",
-    "applicationCategory": "ShoppingApplication",
-    "operatingSystem": "Android",
-    "url": "https://grozi.rango-tech.com"
+    "@type": "Organization",
+    "name": "Rango Tech",
+    "url": "https://rango-tech.com/",
+    "logo": "https://rango-tech.com/",
+    "description": "Independent software studio building calm, private, local-first apps.",
+    "founder": { "@type": "Person", "name": "Edward" },
+    "email": "allen07edwarddev@gmail.com"
   }
   </script>
+  <style>
+    :root{
+      --paper:#f4f1ea; --paper2:#fbf9f3; --ink:#1a1a17; --ink-soft:#4b4942;
+      --muted:#7c786c; --faint:#9d9888;
+      --rule:#ddd7c8; --rule-hi:#cabfa6;
+      --ember:#dd4f1f; --ember-soft:#e9683a;
+      --serif:ui-serif,Georgia,"Times New Roman",serif;
+      --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+      --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+        "Helvetica Neue",Arial,sans-serif;
+    }
+    @media (prefers-color-scheme:dark){
+      :root{
+        --paper:#0e0e0c; --paper2:#15150f; --ink:#ece9e0; --ink-soft:#c7c3b4;
+        --muted:#928d7d; --faint:#6a665a;
+        --rule:#2a2a23; --rule-hi:#3a392f;
+        --ember:#ff6a3d; --ember-soft:#ff8254;
+      }
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--paper);color:var(--ink);line-height:1.6;
+      font-family:var(--sans);-webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;accent-color:var(--ember);
+      background-image:radial-gradient(var(--rule) .6px,transparent .6px);
+      background-size:22px 22px;background-position:-1px -1px;
+    }
+    ::selection{background:var(--ember);color:var(--paper)}
+    :focus-visible{outline:2px solid var(--ember);outline-offset:3px;
+      border-radius:1px}
+    section{scroll-margin-top:84px}
+    h1,h2,h3,.spec .t{text-wrap:balance}
+    p{text-wrap:pretty}
+    a{color:var(--ink);text-decoration:none}
+    .wrap{max-width:1000px;margin:0 auto;
+      padding-left:32px;padding-right:32px}
+
+    /* mono section markers */
+    .mark{font-family:var(--mono);font-size:11.5px;letter-spacing:2px;
+      text-transform:uppercase;color:var(--ember);display:flex;
+      align-items:center;gap:14px;margin-bottom:34px}
+    .mark::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+    /* ---- Top bar ---- */
+    .topbar{border-bottom:1px solid var(--rule);background:var(--paper);
+      position:sticky;top:0;z-index:20}
+    .topbar .row{display:flex;align-items:center;justify-content:space-between;
+      padding:18px 0;font-family:var(--mono);font-size:13px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:700;
+      letter-spacing:.5px}
+    .brand .logo{width:30px;height:30px;border-radius:7px;
+      border:1px solid var(--rule);background:var(--paper2);
+      display:block;flex:0 0 auto}
+    .brand .logo .lg-r{font-family:var(--serif);font-size:18px;
+      font-weight:600;fill:var(--ink)}
+    .brand .logo .lg-dot{fill:var(--ember)}
+    .brand .x{color:var(--ember)}
+    .topnav{display:flex;gap:26px;color:var(--muted)}
+    .topnav a{position:relative;padding-bottom:2px;
+      transition:color .18s ease}
+    .topnav a::after{content:"";position:absolute;left:0;right:100%;
+      bottom:-2px;height:1px;background:var(--ember);
+      transition:right .22s ease}
+    .topnav a:hover{color:var(--ink)}
+    .topnav a:hover::after{right:0}
+    .clock{color:var(--faint);font-variant-numeric:tabular-nums}
+
+    /* ---- Hero ---- */
+    .hero{padding-top:84px;padding-bottom:84px;display:grid;
+      grid-template-columns:1.15fr .85fr;gap:68px;align-items:center}
+    .hero .kick{font-family:var(--mono);font-size:12px;letter-spacing:2px;
+      text-transform:uppercase;color:var(--muted)}
+    .hero h1{font-family:var(--serif);font-weight:600;font-size:62px;
+      line-height:1.08;letter-spacing:-1.5px;margin:26px 0 0}
+    .hero h1 em{font-style:italic;color:var(--ember)}
+    .cursor{display:inline-block;width:3px;height:.92em;
+      background:var(--ember);margin-left:6px;transform:translateY(4px);
+      animation:blink 1.1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .hero p.lede{color:var(--ink-soft);font-size:18px;margin-top:26px;
+      max-width:440px}
+    .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:38px;
+      align-items:center}
+    .btn{font-family:var(--mono);font-size:13px;letter-spacing:.5px;
+      text-transform:uppercase;padding:13px 22px;border-radius:2px;
+      border:1px solid var(--ink);
+      transition:background .18s ease,color .18s ease,
+        border-color .18s ease,transform .12s ease}
+    .btn:active{transform:translateY(1px)}
+    .btn.solid{background:var(--ink);color:var(--paper)}
+    .btn.solid:hover{background:var(--ember);border-color:var(--ember)}
+    .btn.line{color:var(--ink);border-color:var(--rule-hi)}
+    .btn.line:hover{border-color:var(--ember);color:var(--ember)}
+
+    /* ---- Signature: the "local" frame ---- */
+    .device{border:1px solid var(--ink);border-radius:4px;
+      background:var(--paper2);position:relative;overflow:hidden;
+      box-shadow:14px 14px 0 -1px var(--rule)}
+    .device .bar{display:flex;align-items:center;gap:7px;
+      padding:11px 14px;border-bottom:1px solid var(--rule);
+      font-family:var(--mono);font-size:11px;color:var(--muted)}
+    .device .bar i{width:9px;height:9px;border-radius:50%;
+      background:var(--rule-hi);display:inline-block}
+    .device .bar i:nth-child(2){background:var(--ember-soft)}
+    .device .bar span{margin-left:auto;letter-spacing:1px}
+    .device canvas{display:block;width:100%;height:260px}
+    .device .cap{position:absolute;left:14px;bottom:12px;
+      font-family:var(--mono);font-size:10.5px;color:var(--faint);
+      letter-spacing:1px;pointer-events:none}
+    .device .cap b{color:var(--ember)}
+
+    section{padding-top:80px;padding-bottom:80px;
+      border-top:1px solid var(--rule)}
+
+    /* ---- Principles: spec rows ---- */
+    .spec{border-top:1px solid var(--rule)}
+    .spec .r{display:grid;grid-template-columns:72px 220px 1fr;gap:28px;
+      padding:30px 0 30px 0;border-bottom:1px solid var(--rule);
+      align-items:baseline;position:relative;
+      transition:padding-left .25s ease}
+    .spec .r::before{content:"";position:absolute;left:-22px;top:30px;
+      bottom:30px;width:2px;background:var(--ember);
+      transform:scaleY(0);transform-origin:top;
+      transition:transform .25s ease}
+    .spec .r:hover{padding-left:14px}
+    .spec .r:hover::before{transform:scaleY(1)}
+    .spec .n{font-family:var(--mono);font-size:13px;color:var(--faint);
+      font-variant-numeric:tabular-nums;transition:color .25s ease}
+    .spec .r:hover .n{color:var(--ember)}
+    .spec .t{font-family:var(--serif);font-size:23px;letter-spacing:-.3px}
+    .spec .d{color:var(--ink-soft);font-size:15px;line-height:1.7}
+
+    /* ---- Work ---- */
+    .work{display:grid;grid-template-columns:1fr 1fr;gap:0;
+      border:1px solid var(--rule)}
+    .card{padding:40px;border-right:1px solid var(--rule);
+      position:relative;transition:background .2s}
+    .card:last-child{border-right:0}
+    .card:hover{background:var(--paper2)}
+    .card .hd{display:flex;align-items:center;gap:14px}
+    .card .hd img{width:50px;height:50px;border-radius:12px;
+      border:1px solid var(--rule)}
+    .card .hd .ph{width:50px;height:50px;border-radius:12px;
+      border:1px dashed var(--rule-hi);display:flex;
+      align-items:center;justify-content:center;font-size:22px;
+      color:var(--faint)}
+    .card h3{font-family:var(--serif);font-size:22px}
+    .card .meta{font-family:var(--mono);font-size:11px;color:var(--faint);
+      letter-spacing:1px;text-transform:uppercase}
+    .card .st{margin-left:auto;font-family:var(--mono);font-size:10.5px;
+      letter-spacing:1.5px;text-transform:uppercase;color:var(--ember);
+      border:1px solid var(--rule-hi);padding:4px 9px;border-radius:2px}
+    .card.dim .st{color:var(--faint)}
+    .card p{color:var(--ink-soft);font-size:15px;margin-top:20px;
+      line-height:1.7}
+    .card .lk{margin-top:26px;font-family:var(--mono);font-size:13px;
+      display:flex;gap:24px}
+    .card .lk a{color:var(--ember);border-bottom:1px solid transparent}
+    .card .lk a:hover{border-color:var(--ember)}
+
+    /* ---- About ---- */
+    .about-grid{display:grid;grid-template-columns:200px 1fr;gap:56px}
+    .about-grid .who{font-family:var(--mono);font-size:12px;
+      color:var(--muted);line-height:2}
+    .about-grid .who b{color:var(--ink);display:block;
+      font-family:var(--serif);font-size:19px;margin-bottom:6px}
+    .about-grid .body p{font-size:16px;color:var(--ink-soft);
+      margin-top:20px;line-height:1.75}
+    .about-grid .body p:first-child{margin-top:0;font-size:18px;
+      color:var(--ink);font-family:var(--serif);line-height:1.5}
+    .about-grid a{color:var(--ember);text-decoration:underline;
+      text-decoration-color:color-mix(in srgb,var(--ember) 35%,transparent);
+      text-underline-offset:3px;text-decoration-thickness:1px;
+      transition:text-decoration-color .18s ease}
+    .about-grid a:hover{text-decoration-color:var(--ember)}
+    .about-grid .who a{text-decoration:none;border-bottom:1px solid
+      color-mix(in srgb,var(--ember) 30%,transparent);
+      transition:border-color .18s ease}
+    .about-grid .who a:hover{border-color:var(--ember)}
+
+    footer{border-top:1px solid var(--ink);
+      padding-top:44px;padding-bottom:72px;
+      font-family:var(--mono);font-size:12px;color:var(--faint)}
+    footer .fr{display:flex;justify-content:space-between;
+      flex-wrap:wrap;gap:14px;letter-spacing:.5px}
+    footer a{color:var(--muted);transition:color .18s ease}
+    footer a:hover{color:var(--ember)}
+    footer .legal{margin-top:18px;line-height:1.7;max-width:560px}
+
+    @media (max-width:860px){
+      .wrap{padding-left:24px;padding-right:24px}
+      .hero{grid-template-columns:1fr;gap:44px;
+        padding-top:52px;padding-bottom:56px}
+      .hero h1{font-size:44px}
+      section{padding-top:60px;padding-bottom:60px}
+      .mark{margin-bottom:28px}
+      .card{padding:30px}
+      .spec .r{grid-template-columns:44px 1fr;gap:6px 16px}
+      .spec .d{grid-column:1/-1}
+      .work{grid-template-columns:1fr}
+      .card{border-right:0;border-bottom:1px solid var(--rule)}
+      .card:last-child{border-bottom:0}
+      .about-grid{grid-template-columns:1fr;gap:18px}
+      .topnav{display:none}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation:none!important;transition:none!important}
+    }
+  </style>
 </head>
 <body>
-  
-  <header class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="./index.html">
-        Grozi
+
+  <div class="topbar">
+    <div class="wrap row">
+      <a class="brand" href="/">
+        <svg class="logo" viewBox="0 0 32 32" role="img" aria-label="Rango Tech">
+          <text class="lg-r" x="7.5" y="23">R</text>
+          <circle class="lg-dot" cx="23.5" cy="21" r="2.4"></circle>
+        </svg>
+        <span>RANGO<span class="x">.</span>TECH</span>
       </a>
-      <div class="spacer"></div>
-      <nav class="links">
-        <a href="#features">Features</a>
-        <a href="#how">How it works</a>
-        <a href="./privacy.html">Privacy</a>
-        <a href="./terms.html">Terms</a>
-      </nav>
-      <a class="cta" href="#get">Get the app</a>
+      <div class="topnav">
+        <a href="#principles">Principles</a>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+      </div>
+      <div class="clock" id="clk">--:--:-- LOCAL</div>
+    </div>
+  </div>
+
+  <header class="wrap hero">
+    <div>
+      <div class="kick">Independent software studio · est. 2026</div>
+      <h1>Calm, private<br />software, built<br /><em>to outlast</em> trends<span class="cursor"></span></h1>
+      <p class="lede">A one-person studio that ships local-first apps —
+        deliberate tools that keep your data on your device and stay out
+        of your way.</p>
+      <div class="cta-row">
+        <a class="btn solid" href="#work">See the work</a>
+        <a class="btn line" href="mailto:allen07edwarddev@gmail.com">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="device" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><span>on-device</span></div>
+      <canvas id="cv"></canvas>
+      <div class="cap"><b>your data</b> — confined to this frame, nothing leaves</div>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-grid">
-      <div>
-        
-          <h1>Grozi</h1> — the friendliest <span class="accent">shared grocery list</span>
-          for your household.
-        <p class="lead">
-          Plan together, shop together. Grozi keeps everyone on the same
-          list with realtime updates, gentle reminders, and an AI helper
-          that suggests what you need — so nobody comes home with three
-          packs of milk again.
-        </p>
-        <div class="ctas">
-          <a class="btn btn-primary" href="#get">Download for Android</a>
-          <a class="btn btn-secondary" href="#features">See features</a>
+  <main>
+
+    <section class="wrap" id="principles">
+      <div class="mark">§01 — Principles</div>
+      <div class="spec">
+        <div class="r">
+          <div class="n">001</div>
+          <div class="t">Local-first</div>
+          <div class="d">Data lives on the device. No accounts, no servers
+            holding your information, no tracking SDKs.</div>
+        </div>
+        <div class="r">
+          <div class="n">002</div>
+          <div class="t">Calm by default</div>
+          <div class="d">Focused interfaces that do one job well — no
+            engagement loops, no noise competing for your attention.</div>
+        </div>
+        <div class="r">
+          <div class="n">003</div>
+          <div class="t">Yours to keep</div>
+          <div class="d">Open data you can export and back up anytime,
+            including to your own cloud — app-private folder only.</div>
         </div>
       </div>
-      <div class="hero-art">
-        <span class="pill">Free with optional ads ✨</span>
-        <img src="./assets/mascot_hero.png" alt="Grozi mascot bear holding a basket" />
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="features" class="features">
-    <div class="wrap">
-      <h2>Everything a busy household needs.</h2>
-      <p style="max-width: 640px;">
-        Designed around how families actually shop — split between people,
-        scattered across stores, scribbled on the back of a receipt at
-        midnight. Grozi pulls it all together.
-      </p>
-
-      <div class="feature-grid">
-        <div class="feature">
-          <div class="icon">🛒</div>
-          <h3>Shared lists, in real time</h3>
-          <p>Add an item from the bus, watch it appear on your partner's
-             phone before they reach the dairy aisle. No "did you get it?"
-             texts.</p>
+    <section class="wrap" id="work">
+      <div class="mark">§02 — Work</div>
+      <div class="work">
+        <div class="card">
+          <div class="hd">
+            <img src="icon.png" alt="LittleLog app icon" />
+            <div>
+              <h3>LittleLog</h3>
+              <div class="meta">Android · com.rango.baby_tracker</div>
+            </div>
+            <span class="st">Live</span>
+          </div>
+          <p>A calm, private tracker for a baby's daily logs, medications
+            and milestones. Local-first, no account required, with optional
+            backup to your own Google Drive.</p>
+          <div class="lk">
+            <a href="https://littlelog.rango-tech.com">Website ↗</a>
+            <a href="https://littlelog.rango-tech.com/privacy-policy.html">Privacy ↗</a>
+          </div>
         </div>
-        <div class="feature">
-          <div class="icon">✨</div>
-          <h3>AI that knows groceries</h3>
-          <p>Describe a meal — "Spaghetti carbonara for 4" — and Grozi
-             builds the list, in your local currency, with price
-             estimates and friendly thumbnails.</p>
-        </div>
-        <div class="feature">
-          <div class="icon">📍</div>
-          <h3>Group by store, or by aisle</h3>
-          <p>Switch between by-store and by-category views so the list
-             matches how you actually walk the shop.</p>
-        </div>
-        <div class="feature">
-          <div class="icon">⏰</div>
-          <h3>Schedule reminders</h3>
-          <p>Set a weekly Saturday-morning ping, or a one-time nudge
-             before the party. Reminders fire on every household
-             member's phone.</p>
-        </div>
-        <div class="feature">
-          <div class="icon">💸</div>
-          <h3>Budget at a glance</h3>
-          <p>See what you've spent vs. what's pending. Let the AI
-             estimate a budget from your list if you don't have one yet.</p>
-        </div>
-        <div class="feature">
-          <div class="icon">📦</div>
-          <h3>Reuse last week's run</h3>
-          <p>Old lists archive cleanly. One tap to duplicate them as a
-             fresh active trip — your weekly staples never get retyped.</p>
+        <div class="card dim">
+          <div class="hd">
+            <div class="ph">+</div>
+            <div>
+              <h3>Next project</h3>
+              <div class="meta">In development</div>
+            </div>
+            <span class="st">Soon</span>
+          </div>
+          <p>New calm, private tools are in the works. This is where they'll
+            appear — reach out if you'd like to hear when they launch.</p>
+          <div class="lk">
+            <a href="mailto:allen07edwarddev@gmail.com">Notify me ↗</a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="how" class="how">
-    <div class="wrap">
-      <h2>Three taps to your first shared list.</h2>
-      <p>No accounts to wrestle with, no setup, no clutter.</p>
-
-      <div class="steps">
-        <div class="step">
-          <h3>Sign in with Google</h3>
-          <p>One tap. Grozi creates your stores and you're ready —
-             Grocery, Drugstore, Bakery, Market are seeded by default.</p>
+    <section class="wrap" id="about">
+      <div class="mark">§03 — About</div>
+      <div class="about-grid">
+        <div class="who">
+          <b>Edward</b>
+          Founder &amp; sole developer<br />
+          Design · Build · Maintain<br />
+          <a href="mailto:allen07edwarddev@gmail.com">allen07edwarddev@gmail.com</a>
         </div>
-        <div class="step">
-          <h3>Share with family</h3>
-          <p>Tap Share on any list, send the code, or scan a QR.
-             Realtime sync handles the rest.</p>
-        </div>
-        <div class="step">
-          <h3>Shop together</h3>
-          <p>Check items off in store. Everyone sees who picked
-             what. Nobody buys the milk twice.</p>
+        <div class="body">
+          <p>Rango Tech is an independent software studio — one person
+            designing, building and maintaining every product end to end.</p>
+          <p>The work is deliberately small and opinionated: privacy and
+            longevity over growth metrics. No analytics SDKs, no behavioral
+            tracking, nothing sold. Apps work offline; the only network use
+            is what you explicitly opt into, such as your own cloud backup.</p>
+          <p>Have an idea, a question, or a data request? Email
+            <a href="mailto:allen07edwarddev@gmail.com">allen07edwarddev@gmail.com</a>.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="get" class="features">
-    <div class="wrap" style="text-align:center;">
-      <h2>Ready to make grocery day calm?</h2>
-      <p>Grozi is free with light ads. Watch a video to earn AI credits or
-         hide ads for a while — you decide.</p>
-      <div class="ctas" style="justify-content: center; margin-top: 22px;">
-        <a class="btn btn-primary"
-           href="https://play.google.com/store/apps/details?id=com.rango.grozi">
-          Get it on Google Play
-        </a>
-        <a class="btn btn-secondary" href="./privacy.html">Read our privacy policy</a>
-      </div>
-    </div>
-  </section>
+  </main>
 
-  <footer class="foot">
-    <div class="foot-inner">
-      <span class="brand">Grozi</span>
-      <span class="spacer"></span>
-      <span class="links">
-        <a href="./privacy.html">Privacy</a>
-        <a href="./terms.html">Terms</a>
-        <a href="mailto:allen07edwarddev@gmail.com">Contact</a>
+  <footer class="wrap">
+    <div class="fr">
+      <span>© 2026 RANGO TECH — DEVELOPED BY EDWARD</span>
+      <span>
+        <a href="mailto:allen07edwarddev@gmail.com">CONTACT</a> ·
+        <a href="https://littlelog.rango-tech.com">LITTLELOG</a>
       </span>
     </div>
-    <div class="foot-inner">
-      <small>© 2026 Grozi. Made with 🌱 for households who shop together.</small>
-    </div>
+    <p class="legal">This is the official homepage for Rango Tech, provided
+      for app and OAuth verification. All rights reserved.</p>
   </footer>
+
+  <script>
+    // Local clock — reinforces "local-first": time is read from the device.
+    (function () {
+      var el = document.getElementById('clk');
+      function tick() {
+        var d = new Date(), p = function (n) { return String(n).padStart(2, '0'); };
+        el.textContent = p(d.getHours()) + ':' + p(d.getMinutes()) + ':' +
+          p(d.getSeconds()) + ' LOCAL';
+      }
+      tick(); setInterval(tick, 1000);
+    })();
+
+    // Signature: particles physically confined to the frame (local-first
+    // made literal). They bounce off the walls and are repelled by the
+    // cursor; nothing ever leaves the box.
+    (function () {
+      var reduce = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+      var cv = document.getElementById('cv');
+      if (!cv || !cv.getContext) return;
+      var ctx = cv.getContext('2d'), W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2);
+      var pts = [], N = 34, mx = -999, my = -999;
+      function ink() {
+        return getComputedStyle(document.body).getPropertyValue('--ink').trim();
+      }
+      function ember() {
+        return getComputedStyle(document.body).getPropertyValue('--ember').trim();
+      }
+      function size() {
+        W = cv.clientWidth; H = cv.clientHeight;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function init() {
+        pts = [];
+        for (var i = 0; i < N; i++) {
+          pts.push({
+            x: Math.random() * W, y: Math.random() * H,
+            vx: (Math.random() - .5) * .7, vy: (Math.random() - .5) * .7,
+            r: 1.4 + Math.random() * 1.8, hot: Math.random() < .14
+          });
+        }
+      }
+      function frame() {
+        ctx.clearRect(0, 0, W, H);
+        var ic = ink(), ec = ember();
+        for (var i = 0; i < pts.length; i++) {
+          var p = pts[i];
+          if (!reduce) {
+            var dx = p.x - mx, dy = p.y - my, dd = dx * dx + dy * dy;
+            if (dd < 6400) {
+              var f = (6400 - dd) / 6400 * .9, dist = Math.sqrt(dd) || 1;
+              p.vx += dx / dist * f; p.vy += dy / dist * f;
+            }
+            p.vx *= .985; p.vy *= .985;
+            p.x += p.vx; p.y += p.vy;
+            // hard walls — confinement is the whole point
+            if (p.x < p.r) { p.x = p.r; p.vx = Math.abs(p.vx); }
+            if (p.x > W - p.r) { p.x = W - p.r; p.vx = -Math.abs(p.vx); }
+            if (p.y < p.r) { p.y = p.r; p.vy = Math.abs(p.vy); }
+            if (p.y > H - p.r) { p.y = H - p.r; p.vy = -Math.abs(p.vy); }
+            var sp = Math.hypot(p.vx, p.vy);
+            if (sp < .12) { p.vx += (Math.random() - .5) * .25; p.vy += (Math.random() - .5) * .25; }
+          }
+          // links
+          for (var j = i + 1; j < pts.length; j++) {
+            var q = pts[j], lx = p.x - q.x, ly = p.y - q.y, l2 = lx * lx + ly * ly;
+            if (l2 < 8200) {
+              ctx.globalAlpha = (1 - l2 / 8200) * .22;
+              ctx.strokeStyle = ic; ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+            }
+          }
+        }
+        ctx.globalAlpha = 1;
+        for (var k = 0; k < pts.length; k++) {
+          var pt = pts[k];
+          ctx.fillStyle = pt.hot ? ec : ic;
+          ctx.globalAlpha = pt.hot ? .95 : .55;
+          ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.r, 0, 7); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(frame);
+      }
+      cv.addEventListener('pointermove', function (e) {
+        var b = cv.getBoundingClientRect();
+        mx = e.clientX - b.left; my = e.clientY - b.top;
+      });
+      cv.addEventListener('pointerleave', function () { mx = my = -999; });
+      window.addEventListener('resize', function () { size(); init(); });
+      size(); init();
+      if (reduce) { frame(); } else { requestAnimationFrame(frame); }
+    })();
+  </script>
 
 </body>
 </html>
