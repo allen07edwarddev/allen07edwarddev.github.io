@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow" />
   <title>Rango Tech — independent software studio</title>
-  <meta name="description" content="Rango Tech is an independent software studio building calm, private, local-first apps. Your data stays on your device." />
+  <meta name="description" content="Rango Tech is an independent software studio building calm, private apps — LittleLog, Grozi and Melodi. Your data stays yours." />
   <meta property="og:title" content="Rango Tech" />
   <meta property="og:description" content="Independent software studio. Calm, private, local-first apps." />
   <meta property="og:type" content="website" />
@@ -22,7 +22,18 @@
     "logo": "https://rango-tech.com/",
     "description": "Independent software studio building calm, private, local-first apps.",
     "founder": { "@type": "Person", "name": "Edward" },
-    "email": "allen07edwarddev@gmail.com"
+    "email": "allen07edwarddev@gmail.com",
+    "owns": [
+      { "@type": "SoftwareApplication", "name": "LittleLog",
+        "operatingSystem": "Android", "applicationCategory": "LifestyleApplication",
+        "url": "https://littlelog.rango-tech.com" },
+      { "@type": "SoftwareApplication", "name": "Grozi",
+        "operatingSystem": "Android", "applicationCategory": "ShoppingApplication",
+        "url": "https://grozi.rango-tech.com" },
+      { "@type": "SoftwareApplication", "name": "Melodi",
+        "operatingSystem": "Android", "applicationCategory": "EntertainmentApplication",
+        "url": "https://melodi.rango-tech.com" }
+    ]
   }
   </script>
   <style>
@@ -120,6 +131,21 @@
     .btn.line{color:var(--ink);border-color:var(--rule-hi)}
     .btn.line:hover{border-color:var(--ember);color:var(--ember)}
 
+    /* hero app chips */
+    .shipped{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+      margin-top:34px}
+    .sh-label{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;
+      text-transform:uppercase;color:var(--faint);margin-right:4px}
+    .chip{display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);
+      border:1px solid var(--rule);border-radius:999px;
+      padding:6px 14px 6px 7px;background:var(--paper2);
+      transition:border-color .18s ease,color .18s ease,
+        transform .15s ease}
+    .chip img{width:22px;height:22px;border-radius:6px;display:block}
+    .chip:hover{border-color:var(--ember);color:var(--ember);
+      transform:translateY(-1px)}
+
     /* ---- Signature: the "local" frame ---- */
     .device{border:1px solid var(--ink);border-radius:4px;
       background:var(--paper2);position:relative;overflow:hidden;
@@ -139,6 +165,18 @@
 
     section{padding-top:80px;padding-bottom:80px;
       border-top:1px solid var(--rule)}
+
+    /* ---- Stat bar ---- */
+    .statbar{border-top:1px solid var(--rule);background:var(--paper2)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+    .stat{padding:26px 18px;border-right:1px solid var(--rule);
+      text-align:center}
+    .stat:first-child{border-left:1px solid var(--rule)}
+    .stat b{display:block;font-family:var(--serif);font-size:30px;
+      font-weight:600;letter-spacing:-.5px}
+    .stat span{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;
+      text-transform:uppercase;color:var(--muted)}
+    .stat:hover b{color:var(--ember)}
 
     /* ---- Principles: spec rows ---- */
     .spec{border-top:1px solid var(--rule)}
@@ -163,7 +201,17 @@
       border:1px solid var(--rule)}
     .card{padding:40px;border-right:1px solid var(--rule);
       position:relative;transition:background .2s}
-    .card:last-child{border-right:0}
+    .card:nth-child(even){border-right:0}
+    .card:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+    .card::before{content:"";position:absolute;left:0;top:0;right:0;
+      height:2px;background:var(--accent,var(--ember));
+      transform:scaleX(0);transform-origin:left;
+      transition:transform .3s ease}
+    .card:hover::before{transform:scaleX(1)}
+    .card:hover .st{border-color:var(--accent,var(--ember));
+      color:var(--accent,var(--ember))}
+    .card .hd img{transition:transform .25s ease}
+    .card:hover .hd img{transform:scale(1.06) rotate(-2deg)}
     .card:hover{background:var(--paper2)}
     .card .hd{display:flex;align-items:center;gap:14px}
     .card .hd img{width:50px;height:50px;border-radius:12px;
@@ -183,7 +231,9 @@
       line-height:1.7}
     .card .lk{margin-top:26px;font-family:var(--mono);font-size:13px;
       display:flex;gap:24px}
-    .card .lk a{color:var(--ember);border-bottom:1px solid transparent}
+    .card .lk{flex-wrap:wrap;gap:14px 24px}
+    .card .lk a{color:var(--ember);border-bottom:1px solid transparent;
+      transition:border-color .18s ease}
     .card .lk a:hover{border-color:var(--ember)}
 
     /* ---- About ---- */
@@ -230,9 +280,19 @@
       .card:last-child{border-bottom:0}
       .about-grid{grid-template-columns:1fr;gap:18px}
       .topnav{display:none}
+      .stats{grid-template-columns:1fr 1fr}
+      .stat{border-left:0!important;border-bottom:1px solid var(--rule)}
+      .stat:nth-child(odd){border-right:1px solid var(--rule)}
+      .stat:nth-child(even){border-right:0}
     }
+    /* scroll reveal */
+    .rv{opacity:0;transform:translateY(18px);
+      transition:opacity .6s ease,transform .6s ease}
+    .rv.in{opacity:1;transform:none}
+
     @media (prefers-reduced-motion:reduce){
       *,*::before,*::after{animation:none!important;transition:none!important}
+      .rv{opacity:1;transform:none}
     }
   </style>
 </head>
@@ -267,6 +327,12 @@
         <a class="btn solid" href="#work">See the work</a>
         <a class="btn line" href="mailto:allen07edwarddev@gmail.com">Get in touch</a>
       </div>
+      <div class="shipped">
+        <span class="sh-label">Now shipping</span>
+        <a href="#work" class="chip"><img src="icon.png" alt="" />LittleLog</a>
+        <a href="#work" class="chip"><img src="grozi-icon.png" alt="" />Grozi</a>
+        <a href="#work" class="chip"><img src="melodi-icon.png" alt="" />Melodi</a>
+      </div>
     </div>
 
     <div class="device" aria-hidden="true">
@@ -277,6 +343,15 @@
   </header>
 
   <main>
+
+    <div class="statbar">
+      <div class="wrap stats">
+        <div class="stat"><b>03</b><span>apps shipped</span></div>
+        <div class="stat"><b>00</b><span>tracking SDKs</span></div>
+        <div class="stat"><b>01</b><span>person, end to end</span></div>
+        <div class="stat"><b>∞</b><span>your data, yours</span></div>
+      </div>
+    </div>
 
     <section class="wrap" id="principles">
       <div class="mark">§01 — Principles</div>
@@ -305,7 +380,7 @@
     <section class="wrap" id="work">
       <div class="mark">§02 — Work</div>
       <div class="work">
-        <div class="card">
+        <div class="card" style="--accent:#dd4f1f">
           <div class="hd">
             <img src="icon.png" alt="LittleLog app icon" />
             <div>
@@ -320,6 +395,41 @@
           <div class="lk">
             <a href="https://littlelog.rango-tech.com">Website ↗</a>
             <a href="https://littlelog.rango-tech.com/privacy-policy.html">Privacy ↗</a>
+          </div>
+        </div>
+        <div class="card" style="--accent:#6f8f5a">
+          <div class="hd">
+            <img src="grozi-icon.png" alt="Grozi app icon" />
+            <div>
+              <h3>Grozi</h3>
+              <div class="meta">Android · com.rango.grozi</div>
+            </div>
+            <span class="st">Live</span>
+          </div>
+          <p>Collaborative shopping lists for groceries, hardware, projects
+            and more. Share a list with family or housemates and check items
+            off together in real time.</p>
+          <div class="lk">
+            <a href="https://grozi.rango-tech.com">Website ↗</a>
+            <a href="https://grozi.rango-tech.com/privacy.html">Privacy ↗</a>
+            <a href="https://play.google.com/store/apps/details?id=com.rango.grozi">Google Play ↗</a>
+          </div>
+        </div>
+        <div class="card" style="--accent:#8b5cf6">
+          <div class="hd">
+            <img src="melodi-icon.png" alt="Melodi app icon" />
+            <div>
+              <h3>Melodi</h3>
+              <div class="meta">Android · com.rango.melodi</div>
+            </div>
+            <span class="st">Live</span>
+          </div>
+          <p>A karaoke party app: one phone hosts and plays the songs while
+            everyone else joins with a room code to search and queue their
+            picks. TV mode included.</p>
+          <div class="lk">
+            <a href="https://melodi.rango-tech.com">Website ↗</a>
+            <a href="https://play.google.com/store/apps/details?id=com.rango.melodi">Google Play ↗</a>
           </div>
         </div>
         <div class="card dim">
@@ -366,10 +476,12 @@
 
   <footer class="wrap">
     <div class="fr">
-      <span>© 2026 RANGO TECH — DEVELOPED BY EDWARD</span>
+      <span>© <span id="yr">2026</span> RANGO TECH — DEVELOPED BY EDWARD</span>
       <span>
         <a href="mailto:allen07edwarddev@gmail.com">CONTACT</a> ·
-        <a href="https://littlelog.rango-tech.com">LITTLELOG</a>
+        <a href="https://littlelog.rango-tech.com">LITTLELOG</a> ·
+        <a href="https://grozi.rango-tech.com">GROZI</a> ·
+        <a href="https://melodi.rango-tech.com">MELODI</a>
       </span>
     </div>
     <p class="legal">This is the official homepage for Rango Tech, provided
@@ -386,6 +498,8 @@
           p(d.getSeconds()) + ' LOCAL';
       }
       tick(); setInterval(tick, 1000);
+      var yr = document.getElementById('yr');
+      if (yr) yr.textContent = new Date().getFullYear();
     })();
 
     // Signature: particles physically confined to the frame (local-first
@@ -468,6 +582,29 @@
       window.addEventListener('resize', function () { size(); init(); });
       size(); init();
       if (reduce) { frame(); } else { requestAnimationFrame(frame); }
+    })();
+
+    // Scroll reveal — cards and spec rows fade in as they enter the viewport.
+    (function () {
+      var els = document.querySelectorAll('.card,.spec .r,.about-grid');
+      els.forEach(function (el) { el.classList.add('rv'); });
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e, i) {
+          if (e.isIntersecting) {
+            e.target.style.transitionDelay = (e.target.dataset.d || 0) + 'ms';
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: .15 });
+      els.forEach(function (el, i) {
+        el.dataset.d = (i % 2) * 90;
+        io.observe(el);
+      });
     })();
   </script>
 
