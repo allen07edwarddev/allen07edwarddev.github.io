@@ -212,6 +212,8 @@
       color:var(--accent,var(--ember))}
     .card .hd img{transition:transform .25s ease}
     .card:hover .hd img{transform:scale(1.06) rotate(-2deg)}
+    .card[data-href]{cursor:pointer}
+    a,button,.btn,.chip{cursor:pointer}
     .card:hover{background:var(--paper2)}
     .card .hd{display:flex;align-items:center;gap:14px}
     .card .hd img{width:50px;height:50px;border-radius:12px;
@@ -320,9 +322,9 @@
     <div>
       <div class="kick">Independent software studio · est. 2026</div>
       <h1>Calm, private<br />software, built<br /><em>to outlast</em> trends<span class="cursor"></span></h1>
-      <p class="lede">A one-person studio that ships local-first apps —
-        deliberate tools that keep your data on your device and stay out
-        of your way.</p>
+      <p class="lede">A one-person studio shipping small, deliberate apps —
+        a baby tracker, a shared shopping list, a karaoke party — each built
+        to respect your data and stay out of your way.</p>
       <div class="cta-row">
         <a class="btn solid" href="#work">See the work</a>
         <a class="btn line" href="mailto:allen07edwarddev@gmail.com">Get in touch</a>
@@ -358,21 +360,24 @@
       <div class="spec">
         <div class="r">
           <div class="n">001</div>
-          <div class="t">Local-first</div>
-          <div class="d">Data lives on the device. No accounts, no servers
-            holding your information, no tracking SDKs.</div>
+          <div class="t">Private by design</div>
+          <div class="d">Your data stays on your device, or is shared only
+            with the people you invite. No tracking SDKs, no ads, no
+            behavioral analytics — nothing collected, nothing sold.</div>
         </div>
         <div class="r">
           <div class="n">002</div>
           <div class="t">Calm by default</div>
-          <div class="d">Focused interfaces that do one job well — no
-            engagement loops, no noise competing for your attention.</div>
+          <div class="d">Each app does one job well and then gets out of the
+            way. No engagement loops, no streaks, no notifications competing
+            for your attention.</div>
         </div>
         <div class="r">
           <div class="n">003</div>
           <div class="t">Yours to keep</div>
-          <div class="d">Open data you can export and back up anytime,
-            including to your own cloud — app-private folder only.</div>
+          <div class="d">Export and back up your data anytime — including to
+            your own cloud storage. If an app ever shuts down, your records
+            leave with you.</div>
         </div>
       </div>
     </section>
@@ -380,7 +385,7 @@
     <section class="wrap" id="work">
       <div class="mark">§02 — Work</div>
       <div class="work">
-        <div class="card" style="--accent:#dd4f1f">
+        <div class="card" style="--accent:#dd4f1f" data-href="https://littlelog.rango-tech.com">
           <div class="hd">
             <img src="assets/icon.png" alt="LittleLog app icon" />
             <div>
@@ -389,15 +394,15 @@
             </div>
             <span class="st">Live</span>
           </div>
-          <p>A calm, private tracker for a baby's daily logs, medications
-            and milestones. Local-first, no account required, with optional
-            backup to your own Google Drive.</p>
+          <p>A calm, private baby tracker for feeds, sleep, medications and
+            milestones. Everything stays on your phone — no account needed,
+            with optional backup to your own Google Drive.</p>
           <div class="lk">
             <a href="https://littlelog.rango-tech.com">Website ↗</a>
             <a href="https://littlelog.rango-tech.com/privacy-policy.html">Privacy ↗</a>
           </div>
         </div>
-        <div class="card" style="--accent:#6f8f5a">
+        <div class="card" style="--accent:#6f8f5a" data-href="https://grozi.rango-tech.com">
           <div class="hd">
             <img src="grozi-icon.png" alt="Grozi app icon" />
             <div>
@@ -406,16 +411,16 @@
             </div>
             <span class="st">Live</span>
           </div>
-          <p>Collaborative shopping lists for groceries, hardware, projects
-            and more. Share a list with family or housemates and check items
-            off together in real time.</p>
+          <p>Shared shopping lists that stay in sync — groceries, hardware
+            runs, project supplies. Invite family or housemates and check
+            items off together in real time.</p>
           <div class="lk">
             <a href="https://grozi.rango-tech.com">Website ↗</a>
             <a href="https://grozi.rango-tech.com/privacy.html">Privacy ↗</a>
             <a href="https://play.google.com/store/apps/details?id=com.rango.grozi">Google Play ↗</a>
           </div>
         </div>
-        <div class="card" style="--accent:#8b5cf6">
+        <div class="card" style="--accent:#8b5cf6" data-href="https://melodi.rango-tech.com">
           <div class="hd">
             <img src="melodi-icon.png" alt="Melodi app icon" />
             <div>
@@ -424,9 +429,9 @@
             </div>
             <span class="st">Live</span>
           </div>
-          <p>A karaoke party app: one phone hosts and plays the songs while
-            everyone else joins with a room code to search and queue their
-            picks. TV mode included.</p>
+          <p>Turn any living room into a karaoke night. One phone hosts and
+            plays the songs; everyone else scans a QR code to queue their
+            picks. Cast to a TV for the full stage effect.</p>
           <div class="lk">
             <a href="https://melodi.rango-tech.com">Website ↗</a>
             <a href="https://play.google.com/store/apps/details?id=com.rango.melodi">Google Play ↗</a>
@@ -441,8 +446,9 @@
             </div>
             <span class="st">Soon</span>
           </div>
-          <p>New calm, private tools are in the works. This is where they'll
-            appear — reach out if you'd like to hear when they launch.</p>
+          <p>More small, useful tools are on the bench. This is where the
+            next one will appear — say hello if you'd like a note when it
+            ships.</p>
           <div class="lk">
             <a href="mailto:allen07edwarddev@gmail.com">Notify me ↗</a>
           </div>
@@ -464,8 +470,9 @@
             designing, building and maintaining every product end to end.</p>
           <p>The work is deliberately small and opinionated: privacy and
             longevity over growth metrics. No analytics SDKs, no behavioral
-            tracking, nothing sold. Apps work offline; the only network use
-            is what you explicitly opt into, such as your own cloud backup.</p>
+            tracking, nothing sold. When an app connects to the network —
+            syncing a shared list, hosting a karaoke room, backing up to
+            your cloud — it does only that, and only because you asked.</p>
           <p>Have an idea, a question, or a data request? Email
             <a href="mailto:allen07edwarddev@gmail.com">allen07edwarddev@gmail.com</a>.</p>
         </div>
@@ -583,6 +590,15 @@
       size(); init();
       if (reduce) { frame(); } else { requestAnimationFrame(frame); }
     })();
+
+    // Clickable cards — clicking anywhere on a card opens its site,
+    // unless the click landed on a specific link inside it.
+    document.querySelectorAll('.card[data-href]').forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;
+        window.open(card.dataset.href, '_blank', 'noopener');
+      });
+    });
 
     // Scroll reveal — cards and spec rows fade in as they enter the viewport.
     (function () {
