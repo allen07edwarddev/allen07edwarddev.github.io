@@ -1010,228 +1010,116 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
       const r = el.getBoundingClientRect();
       el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .22}px,${(e.clientY - r.top - r.height / 2) * .32}px)`;
     });
-    el.addEventListener('pointerleave', () => el.style.transform = '');
-  });
-  $$('.tilt').forEach(el => {
-    el.addEventListener('pointermove', e => {
-      if (reduced() || !el.classList.contains('in')) return;
-      const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      el.style.transform = `perspective(900px) rotateX(${(.5 - y) * 6}deg) rotateY(${(x - .5) * 8}deg)`;
+    addEventListener('scroll', () => {
+      scrollT = scrollY / Math.max(1, document.body.scrollHeight - innerHeight);
+    }, { passive: true });
+    addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
     });
-    el.addEventListener('pointerleave', () => el.style.transform = '');
-  });
-}
 
-/* ===================================================================
-   effects
-   =================================================================== */
-function burst(from) {
-  if (reduced() || !from) return;
-  const r = from.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-  const s = getComputedStyle(document.documentElement), cols = ['--accent', '--ok', '--type', '--kw', '--fn'].map(v => s.getPropertyValue(v).trim());
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('i'); p.className = 'spark';
-    p.style.left = cx + 'px'; p.style.top = cy + 'px'; p.style.background = pick(cols);
-    document.body.appendChild(p);
-    const a = rand(0, Math.PI * 2), v = rand(50, 170);
-    p.animate([{ transform: 'translate(-50%,-50%)', opacity: 1 }, { transform: `translate(${Math.cos(a) * v}px,${Math.sin(a) * v + 70}px) rotate(${rand(-360, 360)}deg) scale(.2)`, opacity: 0 }],
-      { duration: rand(700, 1200), easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => p.remove();
-  }
-}
-function matrix() {
-  if ($('#matrix')) return;
-  const c = document.createElement('canvas'); c.id = 'matrix'; document.body.appendChild(c);
-  const ctx = c.getContext('2d'); let alive = true;
-  const w = c.width = innerWidth, h = c.height = innerHeight, cols = Math.ceil(w / 16), drops = Array.from({ length: cols }, () => rand(-40, 0));
-  const glyphs = 'アイウエオカキクケコサシスセソタチツテト01RANGO<>{}=$#';
-  const acc = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-  const t0 = performance.now();
-  const draw = t => {
-    if (!alive) return; requestAnimationFrame(draw);
-    ctx.fillStyle = 'rgba(0,0,0,.08)'; ctx.fillRect(0, 0, w, h); ctx.font = '15px JetBrains Mono, monospace';
-    for (let i = 0; i < cols; i++) { const y = drops[i] * 16; ctx.fillStyle = Math.random() > .96 ? '#fff' : acc; ctx.fillText(pick(glyphs), i * 16, y); if (y > h && Math.random() > .975) drops[i] = 0; drops[i] += .9; }
-    if (t - t0 > 8000) stop();
-  };
-  const stop = () => { if (!alive) return; alive = false; c.style.transition = 'opacity .5s'; c.style.opacity = 0; setTimeout(() => c.remove(), 500); removeEventListener('keydown', stop); };
-  c.addEventListener('click', stop); setTimeout(() => addEventListener('keydown', stop), 50);
-  requestAnimationFrame(draw);
-}
-function toast(html, icon = '✦', ms = 3800) {
-  const t = document.createElement('div'); t.className = 'toast';
-  t.innerHTML = `<span class="ic">${icon}</span><span>${html}</span>`;
-  $('#toasts').appendChild(t);
-  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 320); }, ms);
-}
-function copyEmail() {
-  const ok = () => toast(`Copied <b>${EMAIL}</b>`, '✓');
-  navigator.clipboard ? navigator.clipboard.writeText(EMAIL).then(ok, () => toast(EMAIL, '✉')) : toast(EMAIL, '✉');
-}
-const go = id => { const el = document.getElementById(id); el && el.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth' }); };
-const goApp = k => $(`.card[data-app="${k}"]`).scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
+    const v = new THREE.Vector3();
+    const clock = new THREE.Clock();
+    renderer.setAnimationLoop(() => {
+      const t = clock.getElapsedTime();
+      const dt = Math.min(clock.getDelta() + 0.016, 0.05);
 
-/* ===================================================================
-   terminal
-   =================================================================== */
-const tOut = $('#termOut'), tIn = $('#termIn'), tBody = $('#termBody');
-const PROMPT = `<span class="prompt"><span class="u">guest</span>@<span class="h">rango</span> <span class="a">❯</span> </span>`;
-$('#promptEl').innerHTML = PROMPT;
-const hist = []; let hIdx = 0, busy = false;
-const link = (c, l) => `<a class="c" data-cmd="${esc(c)}">${esc(l || c)}</a>`;
-const tp = (html, cls = '') => { const d = document.createElement('div'); d.className = 'tl ' + cls; d.innerHTML = html; tOut.appendChild(d); tBody.scrollTop = tBody.scrollHeight; };
-const tps = async (arr, cls, gap = 24) => { for (const l of arr) { tp(l, cls); if (!reduced()) await sleep(gap); } };
-const CMDS = {
-  help: { d: 'list commands', async fn() { await tps(['<span class="acc">rango-sh</span> — tap or type:', ...Object.entries(CMDS).filter(([, c]) => c.d).map(([k, c]) => `  ${link(k)}${' '.repeat(Math.max(1, 11 - k.length))}<span class="dim">${c.d}</span>`)], '', 14); } },
-  apps: { d: 'everything shipped', async fn() { await tps(['<span class="dim">NAME        STATUS   WHAT</span>', ...Object.entries(APPS).map(([k, a]) => `${link('open ' + k, a.name)}${' '.repeat(Math.max(1, 12 - a.name.length))}${a.status === 'soon' ? '<span class="acc">◌ soon</span>' : '<span class="ok">● live</span>'}   ${a.tagline}`), `${link('open web', 'websites')}${' '.repeat(4)}<span class="acc">● open</span>   taking new projects`]); } },
-  open: { d: 'jump to littlelog · grozi · melodi · web', fn(a) {
-    const k = (a[0] || '').toLowerCase();
-    if (k === 'web') { go('web'); return tp('→ scrolling to websites', 'dim'); }
-    if (!APPS[k]) return tp(`open: try ${Object.keys(APPS).map(x => link('open ' + x, x)).join(', ')}`, 'err');
-    goApp(k); tp(APPS[k].site ? `→ ${APPS[k].name} · <a href="${APPS[k].site}" target="_blank" rel="noopener" class="c">${APPS[k].site}</a>` : `→ ${APPS[k].name} · coming soon 🎄`, 'dim');
-  } },
-  run: { d: 'build & preview an app', async fn(a) { const k = (a[0] || '').toLowerCase(); if (!APPS[k]) return tp(`run: try ${Object.keys(APPS).map(x => link('run ' + x, x)).join(', ')}`, 'err'); goApp(k); tp(`→ running ${APPS[k].name}…`, 'dim'); await sleep(700); runApp(k); } },
-  whoami: { d: 'who is behind this', fn() { tp(`you: <span class="t-str">guest</span>, welcome.\nme:  <span class="t-str">edward</span> — I design, build and ship every app here. one person, end to end.`); } },
-  neofetch: { d: 'studio info', fn() {
-    const up = Math.round((performance.now() - T0) / 1000);
-    const logo = ['  ██████╗ ', '  ██╔══██╗', '  ██████╔╝', '  ██╔══██╗', '  ██║  ██║', '  ╚═╝  ╚═╝'].join('\n');
-    const info = [`<span class="k">guest</span>@<span class="k">rango-tech</span>`, '──────────────────', `<span class="k">studio</span>   one human, end to end`, `<span class="k">apps</span>     LittleLog · Grozi · Melodi · Aguinal-DUE (soon)`, `<span class="k">web</span>      open for projects`, `<span class="k">display</span>  ${innerWidth}×${innerHeight}`, `<span class="k">theme</span>    ${prefs.theme}`, `<span class="k">uptime</span>   ${up < 60 ? up + 's' : Math.floor(up / 60) + 'm ' + up % 60 + 's'} on this page`, `<span class="k">built with</span> Flutter`];
-    tp(`<div class="nf"><pre>${logo}</pre><div>${info.join('\n')}</div></div>`);
-  } },
-  theme: { d: 'night · daylight · crt', fn(a) {
-    if (!THEMES[a[0]]) return tp(`theme: try ${Object.keys(THEMES).map(k => link('theme ' + k, k)).join(', ')}`, 'err');
-    setTheme(a[0]); tp(`theme → <span class="acc">${a[0]}</span>  <span class="dim">(${link('reset')} to undo)</span>`, 'ok');
-  } },
-  accent: { d: 'recolor with any #hex', fn(a) {
-    const c = (a[0] || '').replace(/^([0-9a-f]{3}|[0-9a-f]{6})$/i, '#$1');
-    if (!/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(c)) return tp(`accent: give a hex color, e.g. ${link('accent #5ab0ff')}`, 'err');
-    setTheme(prefs.theme, c); tp(`accent → <span style="color:${c}">■ ${c}</span>`, 'ok');
-  } },
-  contact: { d: 'get in touch', fn() { tp(`→ <a href="mailto:${EMAIL}" class="c">${EMAIL}</a>\n  ${link('mail')} opens your mail app · ${link('copy')} copies the address`); } },
-  mail: { d: 'compose an email', fn() { location.href = `mailto:${EMAIL}?subject=Hello%20Rango`; tp('opening your mail app…', 'ok'); } },
-  copy: { d: 'copy email address', fn() { copyEmail(); tp('copied ✓', 'ok'); } },
-  matrix: { d: 'follow the white rabbit', fn() { tp('wake up, guest… (click or press a key to exit)', 'dim'); matrix(); } },
-  reset: { d: 'restore the default look', fn() { setTheme(prefersLight ? 'daylight' : 'night'); tp('look reset ✓', 'ok'); } },
-  clear: { d: 'clear the screen', fn() { tOut.innerHTML = ''; } },
-  date: { fn() { tp(new Date().toString()); } },
-  echo: { fn(a) { tp(esc(a.join(' '))); } },
-  ls: { fn() { tp(['apps/', 'principles.diff', 'websites.ts', 'contact.sh'].join('   ')); } },
-  sudo: { fn() { tp('guest is not in the sudoers file. This incident will be reported… to edward, who will laugh.', 'err'); } },
-  rm: { fn() { tp('rm: permission denied — the apps are staying.', 'err'); } },
-  exit: { fn() { tp('exit 0 — thanks for stopping by ✦', 'acc'); } },
-  vim: { fn() { tp('you are free to leave at any time. no :q! required.', 'dim'); } },
-};
-CMDS.hire = CMDS.contact;
-async function exec(raw, silent) {
-  const cmd = raw.trim(); if (!silent) tp(`${PROMPT}${esc(cmd)}`); if (!cmd) return;
-  hist.push(cmd); hIdx = hist.length;
-  let [name, ...args] = cmd.split(/\s+/); if (name === 'rango' && args.length) name = args.shift();
-  const c = CMDS[name.toLowerCase()];
-  if (!c) return tp(`command not found: ${esc(name)} — try ${link('help')}`, 'err');
-  busy = true; try { await c.fn(args, cmd); } finally { busy = false; }
-}
-async function typeCmd(cmd) {
-  if (busy) return;
-  tIn.value = '';
-  if (!reduced()) for (const ch of cmd) { tIn.value += ch; await sleep(rand(25, 55)); }
-  await sleep(120); tIn.value = ''; await exec(cmd);
-}
-tIn.addEventListener('keydown', async e => {
-  if (e.key === 'Enter') { const v = tIn.value; tIn.value = ''; await exec(v); }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); if (hIdx > 0) tIn.value = hist[--hIdx]; }
-  else if (e.key === 'ArrowDown') { e.preventDefault(); hIdx = Math.min(hist.length, hIdx + 1); tIn.value = hist[hIdx] || ''; }
-  else if (e.key === 'Tab') {
-    e.preventDefault();
-    const m = Object.keys(CMDS).filter(k => CMDS[k].d && k.startsWith(tIn.value));
-    if (m.length === 1) tIn.value = m[0] + ' '; else if (m.length) tp(m.join('   '), 'dim');
-  }
-});
-tBody.addEventListener('click', e => { if (!getSelection().toString() && !e.target.closest('a')) tIn.focus({ preventScroll: true }); });
-tp(`<span class="acc">rango-sh</span> <span class="dim">— type</span> ${link('help')} <span class="dim">or try</span> ${link('run melodi')}`);
+      globe.rotation.y = t * 0.12;
+      globe.rotation.x = Math.sin(t * 0.15) * 0.12;
 
-/* ===================================================================
-   quick menu (⌘K or /)
-   =================================================================== */
-const PAL = [
-  ['Apps', 'section', '§', () => go('apps')], ['Principles', 'section', '§', () => go('principles')], ['Websites', 'section', '§', () => go('web')],
-  ['Shell', 'section', '§', () => go('shell')], ['Contact', 'section', '§', () => go('contact')],
-  ...Object.entries(APPS).flatMap(([k, a]) => [[a.name, 'app', '◆', () => goApp(k)], ...(a.site ? [[`Visit ${a.name} website`, 'link ↗', '↗', () => open(a.site, '_blank', 'noopener')]] : [])]),
-  ['Email Edward', 'action', '✉', () => location.href = `mailto:${EMAIL}?subject=Hello%20Rango`], ['Copy email address', 'action', '⧉', copyEmail],
-  ['Theme: Night', 'theme', '◐', () => setTheme('night')], ['Theme: Daylight', 'theme', '◐', () => setTheme('daylight')], ['Theme: CRT', 'theme', '◐', () => setTheme('crt')],
-  ...Object.entries(APPS).map(([k, a]) => [`Run ${a.name} demo`, 'demo', '▶', () => { goApp(k); setTimeout(() => runApp(k), 700); }]),
-  ['Matrix mode', 'easter egg', '⌁', matrix], ['Privacy policy', 'page', '¶', () => location.href = 'privacy.html'],
-];
-const pal = $('#pal'), palIn = $('#palIn'), palList = $('#palList'); let items = [], sel = 0;
-function fuzzy(q, s) {
-  if (!q) return { score: 0, idx: [] };
-  const ql = q.toLowerCase(), sl = s.toLowerCase(); let i = 0, score = 0, last = -2; const idx = [];
-  for (let j = 0; j < sl.length && i < ql.length; j++) if (sl[j] === ql[i]) { idx.push(j); score += (j === last + 1 ? 5 : 1) + (j === 0 || sl[j - 1] === ' ' ? 4 : 0); last = j; i++; }
-  return i === ql.length ? { score: score - s.length * .05, idx } : null;
-}
-function renderPal() {
-  const q = palIn.value.trim();
-  items = PAL.map(([l, d, ic, fn]) => ({ l, d, ic, fn, m: fuzzy(q, l) })).filter(x => x.m);
-  if (q) items.sort((a, b) => b.m.score - a.m.score);
-  sel = Math.min(sel, Math.max(0, items.length - 1));
-  palList.innerHTML = items.length ? items.map((it, i) => `<li role="option" data-i="${i}" class="${i === sel ? 'on' : ''}" aria-selected="${i === sel}"><span class="ic">${it.ic}</span><span class="lb">${[...it.l].map((c, j) => it.m.idx.includes(j) ? `<b>${esc(c)}</b>` : esc(c)).join('')}</span><span class="ds">${it.d}</span></li>`).join('') : '<div class="empty">Nothing found.</div>';
-  $('li.on', palList)?.scrollIntoView({ block: 'nearest' });
-}
-const openPal = () => { pal.hidden = false; palIn.value = ''; sel = 0; renderPal(); palIn.focus(); };
-const closePal = () => { pal.hidden = true; };
-const choose = i => { const it = items[i]; if (!it) return; closePal(); it.fn(); };
-palIn.addEventListener('input', () => { sel = 0; renderPal(); });
-palIn.addEventListener('keydown', e => {
-  if (e.key === 'ArrowDown') { e.preventDefault(); sel = (sel + 1) % Math.max(1, items.length); renderPal(); }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); sel = (sel - 1 + items.length) % Math.max(1, items.length); renderPal(); }
-  else if (e.key === 'Enter') { e.preventDefault(); choose(sel); }
-  else if (e.key === 'Escape') closePal();
-});
-palList.addEventListener('click', e => { const li = e.target.closest('li'); li && choose(+li.dataset.i); });
-pal.addEventListener('mousedown', e => { if (e.target === pal) closePal(); });
-$('#kbtn').addEventListener('click', openPal);
-$$('.modk').forEach(k => k.textContent = MOD + 'K');
-document.addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); pal.hidden ? openPal() : closePal(); }
-  else if (e.key === 'Escape' && !pal.hidden) closePal();
-  else if (e.key === '/' && document.activeElement === document.body) { e.preventDefault(); openPal(); }
-});
+      // heartbeat: nodes and core pulse together
+      const beat = 1 + Math.sin(t * 2.2) * 0.18;
+      nodeMat.size = 0.22 * beat;
+      core.rotation.y = t * 0.8; core.rotation.x = t * 0.5;
+      core.scale.setScalar(1 + Math.sin(t * 2.2) * 0.08);
+      coreSprite.material.opacity = 0.65 + Math.sin(t * 2.2) * 0.25;
 
-/* ===================================================================
-   global clicks
-   =================================================================== */
-document.addEventListener('click', e => {
-  const el = e.target.closest('[data-cmd],[data-cmd-quiet],[data-run],[data-flip],[data-zoom],[data-shot],[data-act]'); if (!el) return;
-  const d = el.dataset;
-  if (d.cmd) { e.preventDefault(); typeCmd(d.cmd); }
-  else if (d.cmdQuiet) exec(d.cmdQuiet, true);
-  else if (d.run) runApp(d.run);
-  else if (d.flip) flipCard(d.flip);
-  else if (d.zoom) openLb(d.zoom, +($(`[data-stage="${d.zoom}"]`).dataset.i || 0));
-  else if (d.shot) { const [k, i] = d.shot.split(':'); showShot(k, +i); }
-  else if (d.act === 'copy') copyEmail();
-  else if (d.act === 'palette') openPal();
-});
+      // satellites travel their rings
+      for (let i = 0; i < rings.length; i++) {
+        const r0 = rings[i];
+        const a0 = t * r0.sp + i * 2.1;
+        r0.sat.position.set(Math.cos(a0) * r0.rr, Math.sin(a0) * r0.rr, 0);
+      }
 
-/* ===================================================================
-   footer status bar: clock + real fps sparkline
-   =================================================================== */
-$('#yr').textContent = new Date().getFullYear();
-const clock = () => $('#clock').textContent = new Date().toTimeString().slice(0, 8);
-clock(); setInterval(clock, 1000);
-(() => {
-  const cv = $('#fpsC'), cx = cv.getContext('2d'), s = []; let f = 0, last = performance.now();
-  const loop = t => {
-    f++;
-    if (t - last >= 500) {
-      const fps = Math.round(f * 1000 / (t - last)); f = 0; last = t; s.push(fps); if (s.length > 22) s.shift();
-      $('#fpsN').textContent = fps; cx.clearRect(0, 0, 88, 28); cx.strokeStyle = getComputedStyle($('.status')).color; cx.lineWidth = 2; cx.beginPath();
-      s.forEach((v, i) => { const x = i * 4, y = 26 - Math.min(1, v / 120) * 24; i ? cx.lineTo(x, y) : cx.moveTo(x, y); }); cx.stroke();
+      // arcs flare in, fade out, then re-route
+      for (const a of arcs) {
+        a.life -= dt;
+        if (a.life <= 0) rebuildArc(a);
+        a.mat.opacity = Math.max(0, Math.min(1, a.life)) * 0.55;
+      }
+
+      // move packets along their links, hop to a new link at the end
+      const pp = pktGeo.attributes.position.array;
+      for (let i = 0; i < PACKETS; i++) {
+        const s = pktState[i];
+        s.t += s.sp * dt;
+        if (s.t >= 1) { s.t = 0; s.link = Math.floor((s.link + 13) % links.length); }
+        const [a, b] = links[s.link];
+        v.lerpVectors(a, b, s.t);
+        pp[i * 3] = v.x; pp[i * 3 + 1] = v.y; pp[i * 3 + 2] = v.z;
+      }
+      pktGeo.attributes.position.needsUpdate = true;
+
+      // rain drifts upward
+      const rp = rainGeo.attributes.position.array;
+      for (let i = 0; i < RAIN; i++) {
+        rp[i * 3 + 1] += (0.4 + (i % 7) * 0.12) * dt * 2;
+        if (rp[i * 3 + 1] > 18) rp[i * 3 + 1] = -4;
+      }
+      rainGeo.attributes.position.needsUpdate = true;
+
+      grid.position.z = (t * 0.6) % 1;
+
+      // camera: parallax + scroll orbit around the globe
+      const ang = scrollT * Math.PI * 0.9;
+      const tx = Math.sin(ang) * 9 + mx * 1.1;
+      const tz = Math.cos(ang) * 10 - scrollT * 2;
+      const ty = 1.2 - scrollT * 3.5 - my * 0.7;
+      camera.position.x += (tx - camera.position.x) * 0.05;
+      camera.position.y += (ty - camera.position.y) * 0.05;
+      camera.position.z += (tz - camera.position.z) * 0.05;
+      camera.lookAt(globe.position.x * (1 - scrollT), 0.4 - scrollT * 2, globe.position.z);
+
+      renderer.render(scene, camera);
+    });
+
+    /* ---- card tilt with glow follow ---- */
+    for (const card of document.querySelectorAll('[data-tilt]')) {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateZ(8px)`;
+      });
+      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
     }
-    requestAnimationFrame(loop);
-  };
-  requestAnimationFrame(loop);
-})();
 
-console.log('%c>_ rango-tech', 'font:700 16px monospace;color:#ff9e3d', '\nhey, fellow dev — press ⌘K, or scroll down to the shell. built by hand, one commit at a time.');
-})();
-</script>
+    /* ---- scroll reveals ---- */
+    const io = new IntersectionObserver(es => {
+      for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* ---- metric count-up ---- */
+    const mo = new IntersectionObserver(es => {
+      for (const e of es) {
+        if (!e.isIntersecting) continue;
+        mo.unobserve(e.target);
+        const el = e.target, end = +el.dataset.count, suf = el.dataset.suffix || '';
+        const t0 = performance.now();
+        (function step(now) {
+          const p = Math.min((now - t0) / 1200, 1);
+          el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suf;
+          if (p < 1) requestAnimationFrame(step);
+        })(t0);
+      }
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-count]').forEach(el => mo.observe(el));
+
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2549734523787386"
+     crossorigin="anonymous"></script>
 </body>
 </html>
